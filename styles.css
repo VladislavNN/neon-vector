@@ -2365,6 +2365,180 @@ body.high-contrast .map-stage img { filter: contrast(1.22) brightness(.78) satur
   line-height: 1;
   white-space: nowrap;
 }
+
+/* Polish 1-10: cinematic hero, trailer chapters, weapon telemetry, faction/city feedback. */
+.hero-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+.hero-atmosphere i {
+  position: absolute;
+  width: 130px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(126,245,255,.75), transparent);
+  box-shadow: 0 0 34px rgba(66,248,255,.45);
+  animation: droneSweep 9s linear infinite;
+}
+.hero-atmosphere i:nth-child(1) { top: 22%; left: -10%; animation-delay: -1s; }
+.hero-atmosphere i:nth-child(2) { top: 48%; left: -18%; width: 210px; animation-duration: 13s; animation-delay: -5s; }
+.hero-atmosphere i:nth-child(3) { top: 68%; left: -14%; width: 90px; animation-duration: 7s; animation-delay: -3s; }
+@keyframes droneSweep {
+  to { transform: translate3d(120vw, -28px, 0); opacity: .1; }
+}
+.hero-status {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+.hero-status span {
+  padding: 12px;
+  border: 1px solid rgba(126,245,255,.18);
+  border-radius: 18px;
+  background: rgba(2,7,10,.54);
+  color: var(--muted);
+  font-size: 12px;
+}
+.hero-status b { display: block; color: var(--green); text-transform: uppercase; letter-spacing: .12em; font-size: 10px; }
+.trailer-chapters {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background: rgba(2,7,10,.58);
+}
+.trailer-chapters span {
+  position: relative;
+  display: block;
+  padding: 9px 12px;
+  overflow: hidden;
+  border-radius: 999px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+.trailer-chapters span::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--w);
+  background: linear-gradient(90deg, rgba(175,255,47,.7), rgba(66,248,255,.2));
+  z-index: -1;
+}
+.faction-intel {
+  margin-top: 18px;
+  padding: 22px;
+  border: 1px solid rgba(126,245,255,.22);
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(12,27,35,.78), rgba(3,8,12,.88));
+  box-shadow: var(--shadow);
+}
+.faction-intel span,
+.synergy-panel span {
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.faction-intel strong,
+.synergy-panel strong {
+  display: block;
+  margin-top: 8px;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 38px);
+  line-height: .95;
+  text-transform: uppercase;
+}
+.faction-intel p,
+.synergy-panel p { color: var(--muted); line-height: 1.6; }
+.weapon-bars {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid rgba(126,245,255,.16);
+  border-radius: 22px;
+  background: rgba(2,7,10,.48);
+}
+.weapon-bars span { display: grid; grid-template-columns: 86px 1fr; align-items: center; gap: 12px; color: var(--muted); font-size: 12px; }
+.weapon-bars b { color: var(--text); text-transform: uppercase; letter-spacing: .1em; font-size: 10px; }
+.weapon-bars i {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+}
+.weapon-bars i::before {
+  content: "";
+  display: block;
+  width: var(--v);
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--green), var(--cyan));
+  box-shadow: 0 0 20px rgba(66,248,255,.35);
+}
+.synergy-panel {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid rgba(175,255,47,.24);
+  border-radius: 24px;
+  background: radial-gradient(circle at 10% 0%, rgba(175,255,47,.12), transparent 24rem), rgba(2,7,10,.5);
+}
+.mission-progress {
+  grid-column: 1 / -1;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  overflow: hidden;
+}
+.mission-progress i {
+  display: block;
+  width: 25%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--green), var(--cyan), var(--pink));
+  transition: width .35s ease;
+}
+.district-alerts {
+  display: grid;
+  gap: 8px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.district-alerts li {
+  padding: 9px 10px;
+  border-left: 2px solid var(--green);
+  background: rgba(255,255,255,.05);
+  color: var(--muted);
+  font-size: 12px;
+}
+.edition-grid small {
+  color: var(--cyan);
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+@media (max-width: 920px) {
+  .hero-status { grid-template-columns: 1fr; }
+  .weapon-bars span { grid-template-columns: 74px 1fr; }
+}
+@media (max-width: 620px) {
+  .hero-status { display: none; }
+  .trailer-chapters { padding: 12px; }
+  .faction-intel { padding: 18px; }
+}
 .ability-readout {
   min-height: 38px;
   margin: 0 !important;

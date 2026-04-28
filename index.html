@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@85,500;100,700;112,900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=weapon-art-switch" />
+    <link rel="stylesheet" href="styles.css?v=polish-10" />
   </head>
   <body>
     <div class="boot-screen" data-boot-screen aria-live="polite">
@@ -73,6 +73,7 @@
       <section class="hero section" aria-labelledby="hero-title">
         <div class="hero-bg" aria-hidden="true"></div>
         <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-atmosphere" aria-hidden="true"><i></i><i></i><i></i></div>
         <div class="hero-content reveal">
           <p class="eyebrow">Signal found / Veyra-9 megacity / 2089</p>
           <h1 id="hero-title">Будущее уже взломало тебя.</h1>
@@ -88,6 +89,11 @@
           </div>
           <div class="release-strip" aria-label="Платформы и статус релиза">
             <span>PC</span><span>PS5</span><span>Xbox Series</span><span>Wishlist open</span>
+          </div>
+          <div class="hero-status" aria-label="Состояние города">
+            <span><b>City AI</b> hunting</span>
+            <span><b>District heat</b> adaptive</span>
+            <span><b>Co-op sync</b> duo routes</span>
           </div>
         </div>
         <aside class="hero-panel reveal" aria-label="Данные миссии">
@@ -120,6 +126,12 @@
           <article><img src="assets/street-district.png" alt="Дождливая улица Veyra-9" width="1672" height="941" loading="lazy" decoding="async" /><span>00:31 pursuit</span></article>
           <article><img src="assets/city-map.png" alt="Тактическая карта Veyra-9" width="1694" height="928" loading="lazy" decoding="async" /><span>00:54 lockdown</span></article>
           <article><img src="assets/hero-city.png" alt="Панорама мегаполиса Veyra-9" width="1915" height="821" loading="lazy" decoding="async" /><span>01:18 escape</span></article>
+        </div>
+        <div class="trailer-chapters reveal" aria-label="Структура трейлера">
+          <span style="--w: 18%">Signal breach</span>
+          <span style="--w: 26%">Street pursuit</span>
+          <span style="--w: 34%">City lockdown</span>
+          <span style="--w: 22%">Memory fork</span>
         </div>
       </section>
 
@@ -154,6 +166,11 @@
             <p>Невидимая сеть нетраннеров. Они стирают людей из камер, банков и воспоминаний.</p>
           </article>
         </div>
+        <aside class="faction-intel reveal" data-faction-intel>
+          <span>Active liability</span>
+          <strong>Helix Directorate controls access to clean air, elevators and elite patrol routes.</strong>
+          <p>Выбор фракции меняет контракты, heat level и реакцию районов на карте Veyra-9.</p>
+        </aside>
       </section>
 
       <section class="section arsenal" id="arsenal" aria-labelledby="arsenal-title">
@@ -171,6 +188,11 @@
               <button class="active" type="button" data-weapon="arc">ARC-9</button>
               <button type="button" data-weapon="mono">MONO WIRE</button>
               <button type="button" data-weapon="drone">WRAITH DRONE</button>
+            </div>
+            <div class="weapon-bars" data-weapon-bars aria-label="Характеристики оружия">
+              <span><b>Damage</b><i style="--v: 78%"></i></span>
+              <span><b>Stealth</b><i style="--v: 38%"></i></span>
+              <span><b>Control</b><i style="--v: 64%"></i></span>
             </div>
           </div>
           <div class="weapon-frame reveal tilt-card" data-weapon-frame data-weapon-label="BALLISTICS // ARC-9">
@@ -249,6 +271,11 @@
             <li>Mira route: скрытые маршруты, подмена камер, социальный взлом и контроль районной тревоги.</li>
             <li>Duo route: синхронные миссии, где один герой меняет физический мир, а второй переписывает цифровой.</li>
           </ul>
+          <div class="synergy-panel" data-synergy-panel>
+            <span>Duo synergy</span>
+            <strong>Ghost breach</strong>
+            <p>Dash break + ID spoof открывают быстрый вход без полной тревоги района.</p>
+          </div>
         </div>
       </section>
 
@@ -260,6 +287,7 @@
           <h2 id="timeline-title">Одна миссия. Четыре состояния города.</h2>
         </div>
         <div class="timeline-stage reveal">
+          <div class="mission-progress" aria-hidden="true"><i data-mission-progress></i></div>
           <div class="timeline-visual" aria-hidden="true">
             <div class="timeline-core"><span data-timeline-state>01</span></div>
             <div class="timeline-rings"></div>
@@ -317,6 +345,11 @@
             <span>District feed</span>
             <strong>Helix Spire</strong>
             <p>Вертикальный корпоративный район: чистый воздух наверху, вечная ночь внизу.</p>
+            <ul class="district-alerts" data-district-alerts>
+              <li>Clean-air checkpoints active</li>
+              <li>Elevator routes monitored</li>
+              <li>Elite patrols in upper decks</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -500,9 +533,9 @@
           <h2 id="editions-title">Выбери способ войти в Veyra-9.</h2>
         </div>
         <div class="edition-grid reveal">
-          <article><span>Standard</span><h3>Base contract</h3><p>Игра, цифровой артбук и стартовый набор имплантов.</p><button type="button" class="btn ghost" data-edition="Standard">В wishlist</button></article>
-          <article class="featured"><span>Deluxe</span><h3>Night runner</h3><p>Саундтрек, скины Kael/Mira и эксклюзивный Chrome Saints контракт.</p><button type="button" class="btn primary" data-edition="Deluxe">Выбрать</button></article>
-          <article><span>Collector</span><h3>Glass saint</h3><p>Все бонусы Deluxe, цифровая карта Veyra-9 и набор оружейных модулей.</p><button type="button" class="btn ghost" data-edition="Collector">В wishlist</button></article>
+          <article><span>Standard</span><h3>Base contract</h3><p>Игра, цифровой артбук и стартовый набор имплантов.</p><small>PC / PS5 / Xbox Series</small><button type="button" class="btn ghost" data-edition="Standard">В wishlist</button></article>
+          <article class="featured"><span>Deluxe</span><h3>Night runner</h3><p>Саундтрек, скины Kael/Mira и эксклюзивный Chrome Saints контракт.</p><small>Includes launch soundtrack</small><button type="button" class="btn primary" data-edition="Deluxe">Выбрать</button></article>
+          <article><span>Collector</span><h3>Glass saint</h3><p>Все бонусы Deluxe, цифровая карта Veyra-9 и набор оружейных модулей.</p><small>Digital city atlas included</small><button type="button" class="btn ghost" data-edition="Collector">В wishlist</button></article>
         </div>
       </section>
 
@@ -580,6 +613,6 @@
     </dialog>
 
     <div class="toast-stack" data-toast-stack aria-live="polite" aria-atomic="true"></div>
-    <script src="script.js?v=weapon-art-switch"></script>
+    <script src="script.js?v=polish-10"></script>
   </body>
 </html>

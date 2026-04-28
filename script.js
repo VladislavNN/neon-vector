@@ -9,6 +9,11 @@ const districtCopy = {
   'Rust Docks': 'Порт, где контрабанда имплантов идет быстрее официальных патчей безопасности.',
   'Null Market': 'Черный рынок воспоминаний, фальшивых биографий и одноразовых личностей.'
 };
+const districtAlerts = {
+  'Helix Spire': ['Clean-air checkpoints active', 'Elevator routes monitored', 'Elite patrols in upper decks'],
+  'Rust Docks': ['Smuggler convoys moving', 'Black-clinic doors open', 'Harbor fog hides contraband'],
+  'Null Market': ['Identity auctions live', 'Camera ghosts detected', 'Memory brokers rerouting exits']
+};
 
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
@@ -49,6 +54,10 @@ function selectDistrict(district) {
   });
   districtPanel.querySelector('strong').textContent = district;
   districtPanel.querySelector('p').textContent = districtCopy[district];
+  const alertList = document.querySelector('[data-district-alerts]');
+  if (alertList) {
+    alertList.innerHTML = (districtAlerts[district] || []).map((item) => `<li>${item}</li>`).join('');
+  }
   const activePin = document.querySelector(`.map-pin[data-district="${district}"]`);
   if (activePin) {
     document.documentElement.style.setProperty('--map-x', activePin.style.getPropertyValue('--x'));
@@ -573,6 +582,7 @@ document.querySelectorAll('[data-jump]').forEach((button) => {
 const timelineZone = document.querySelector('[data-timeline-zone]');
 const timelineThreat = document.querySelector('[data-timeline-threat]');
 const timelineVisual = document.querySelector('.timeline-visual');
+const missionProgress = document.querySelector('[data-mission-progress]');
 const previousSetTimelineStep = setTimelineStep;
 setTimelineStep = function(step) {
   previousSetTimelineStep(step);
@@ -580,6 +590,10 @@ setTimelineStep = function(step) {
   if (timelineZone) timelineZone.textContent = step.dataset.zone;
   if (timelineThreat) timelineThreat.textContent = step.dataset.threat;
   if (timelineVisual) timelineVisual.dataset.tone = step.dataset.tone;
+  if (missionProgress) {
+    const index = timelineSteps.indexOf(step);
+    missionProgress.style.width = `${((index + 1) / timelineSteps.length) * 100}%`;
+  }
 };
 updateTimelineStep();
 
@@ -619,7 +633,8 @@ const weaponProfiles = {
     ],
     image: 'assets/weapon-arc9.png',
     alt: 'Футуристический рельсовый пистолет ARC-9 VANTA',
-    label: 'BALLISTICS // ARC-9'
+    label: 'BALLISTICS // ARC-9',
+    bars: { Damage: '78%', Stealth: '38%', Control: '64%' }
   },
   mono: {
     stats: [
@@ -629,7 +644,8 @@ const weaponProfiles = {
     ],
     image: 'assets/weapon-monowire.png',
     alt: 'Киберпанк монопроволока MONO WIRE в тактическом наручном модуле',
-    label: 'STEALTH // MONO WIRE'
+    label: 'STEALTH // MONO WIRE',
+    bars: { Damage: '52%', Stealth: '91%', Control: '72%' }
   },
   drone: {
     stats: [
@@ -639,12 +655,14 @@ const weaponProfiles = {
     ],
     image: 'assets/weapon-wraith-drone.png',
     alt: 'Компактный разведывательный боевой дрон WRAITH DRONE на неоновой платформе',
-    label: 'RECON // WRAITH DRONE'
+    label: 'RECON // WRAITH DRONE',
+    bars: { Damage: '42%', Stealth: '74%', Control: '96%' }
   }
 };
 const weaponReadout = document.querySelector('[data-weapon-readout]');
-const weaponFrame = document.querySelector('[data-weapon-frame]');
-const weaponImage = document.querySelector('[data-weapon-image]');
+const weaponFrame = document.querySelector('[data-weapon-frame]') || document.querySelector('.weapon-frame');
+const weaponImage = document.querySelector('[data-weapon-image]') || document.querySelector('.weapon-frame img');
+const weaponBars = document.querySelector('[data-weapon-bars]');
 function selectWeaponProfile(profile) {
   const data = weaponProfiles[profile] || weaponProfiles.arc;
   document.querySelectorAll('[data-weapon]').forEach((button) => button.classList.toggle('active', button.dataset.weapon === profile));
@@ -653,6 +671,9 @@ function selectWeaponProfile(profile) {
   }
   if (weaponFrame) {
     weaponFrame.dataset.weaponLabel = data.label;
+  }
+  if (weaponBars) {
+    weaponBars.innerHTML = Object.entries(data.bars).map(([label, value]) => `<span><b>${label}</b><i style="--v: ${value}"></i></span>`).join('');
   }
   if (weaponImage && weaponImage.getAttribute('src') !== data.image) {
     weaponFrame?.classList.add('is-switching');
@@ -675,12 +696,22 @@ if (routeState?.weapon) selectWeaponProfile(routeState.weapon);
 
 // Expansion pack: factions influence map, character abilities, editions, ambient city signal.
 const factionDistrict = { helix: 'Helix Spire', chrome: 'Rust Docks', null: 'Null Market' };
+const factionIntel = {
+  helix: ['Helix Directorate controls access to clean air, elevators and elite patrol routes.', 'Корпоративная поддержка снижает chaos, но повышает цену любой ошибки.'],
+  chrome: ['Chrome Saints open black clinics, weapon mods and smuggler roads.', 'Улицы становятся быстрее и опаснее: больше апгрейдов, больше засад.'],
+  null: ['Null Choir erases identities, camera trails and financial fingerprints.', 'Стелс-маршруты усиливаются, но город хуже отличает союзников от целей.']
+};
 document.querySelectorAll('[data-faction]').forEach((card) => {
   card.addEventListener('click', () => {
     document.querySelectorAll('[data-faction]').forEach((item) => item.classList.toggle('active', item === card));
     const faction = card.dataset.faction;
     const mapShell = document.querySelector('[data-map-shell]');
+    const intel = document.querySelector('[data-faction-intel]');
     if (mapShell) mapShell.dataset.faction = faction;
+    if (intel && factionIntel[faction]) {
+      intel.querySelector('strong').textContent = factionIntel[faction][0];
+      intel.querySelector('p').textContent = factionIntel[faction][1];
+    }
     selectDistrict(factionDistrict[faction]);
     unlockAchievement('Faction influence', card.querySelector('h3')?.textContent || 'Faction selected');
   });
@@ -694,12 +725,34 @@ const abilityCopy = {
   blind: 'Camera blind: гасит сетку наблюдения на один маршрут.',
   puppet: 'Drone puppet: перехватывает дрон и отмечает цели через стены.'
 };
+const selectedAbilities = { kael: 'dash', mira: 'spoof' };
+const synergyCopy = {
+  'dash:spoof': ['Ghost breach', 'Dash break + ID spoof открывают быстрый вход без полной тревоги района.'],
+  'dash:blind': ['Blind sprint', 'Каэль прорывается через патруль, пока Мира гасит камеры на маршруте.'],
+  'dash:puppet': ['Drone slingshot', 'Дрон вытягивает цели на линию рывка Каэля.'],
+  'parry:spoof': ['Mirror guard', 'Отражение огня совпадает с подменой профиля охраны.'],
+  'parry:blind': ['Blackout counter', 'Окно парирования становится безопаснее под слепой зоной камер.'],
+  'parry:puppet': ['Crossfire loop', 'Перехваченный дрон держит цель в угле для контратаки.'],
+  'deal:spoof': ['Market ghost', 'Уличные сделки проходят дешевле, когда ID выглядит легальным.'],
+  'deal:blind': ['Quiet trade', 'Камеры молчат, пока Chrome Saints открывают черный вход.'],
+  'deal:puppet': ['Saint escort', 'Дрон сопровождает сделку и маркирует засады.' ]
+};
+function updateSynergy() {
+  const panel = document.querySelector('[data-synergy-panel]');
+  const copy = synergyCopy[`${selectedAbilities.kael}:${selectedAbilities.mira}`] || synergyCopy['dash:spoof'];
+  if (!panel) return;
+  panel.querySelector('strong').textContent = copy[0];
+  panel.querySelector('p').textContent = copy[1];
+}
 document.querySelectorAll('[data-ability]').forEach((button) => {
   button.addEventListener('click', () => {
     const panel = button.closest('.hero-character');
     panel?.querySelectorAll('[data-ability]').forEach((item) => item.classList.toggle('active', item === button));
     const readout = panel?.querySelector('.ability-readout');
     if (readout) readout.textContent = abilityCopy[button.dataset.ability];
+    const owner = panel?.querySelector('[data-ability-readout="kael"]') ? 'kael' : 'mira';
+    selectedAbilities[owner] = button.dataset.ability;
+    updateSynergy();
   });
 });
 
