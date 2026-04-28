@@ -759,7 +759,7 @@ document.querySelectorAll('[data-edition]').forEach((button) => {
 });
 
 const audioSources = {
-  ambient: 'assets/audio/city-ambient.ogg',
+  ambient: 'assets/audio/city-ambient.ogg?v=empty-city',
   clicks: {
     soft: 'assets/audio/ui-hover.ogg',
     hard: 'assets/audio/ui-toggle.ogg',
@@ -780,9 +780,9 @@ const clickPool = new Map();
 let uiClicksEnabled = uiClicksToggle?.checked ?? true;
 
 const audioPresetCopy = {
-  rain: { label: 'Rain channel online', rate: 0.94, volume: 0.36 },
-  drone: { label: 'Drone patrol channel online', rate: 0.82, volume: 0.42 },
-  combat: { label: 'Combat pulse channel online', rate: 1.08, volume: 0.46 }
+  rain: { label: 'Rain channel online', rate: 0.96, volume: 0.26 },
+  drone: { label: 'Drone patrol channel online', rate: 0.88, volume: 0.31 },
+  combat: { label: 'Combat pulse channel online', rate: 1.04, volume: 0.34 }
 };
 
 function getCityAmbient() {
