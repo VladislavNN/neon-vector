@@ -1,7 +1,7 @@
-﻿{
-  "name": "NEON VECTOR Browser Showcase",
+{
+  "name": "NEON VECTOR",
   "short_name": "NEON VECTOR",
-  "description": "AAA cyberpunk game landing page showcasing modern browser APIs.",
+  "description": "Cinematic AAA cyberpunk action-RPG set in the reactive megacity Veyra-9.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#05070a",

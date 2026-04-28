@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'neon-vector-showcase-v13';
+const CACHE_NAME = 'neon-vector-showcase-v14';
 const ASSETS = [
   './styles.css',
   './script.js',

@@ -1,4 +1,4 @@
-﻿const header = document.querySelector('[data-header]');
+const header = document.querySelector('[data-header]');
 const cursor = document.querySelector('.cursor');
 const trailerModal = document.querySelector('[data-trailer-modal]');
 const openTrailerButtons = document.querySelectorAll('[data-open-trailer]');
@@ -135,7 +135,9 @@ const featureChecks = {
   hasSelector: () => CSS.supports('selector(:has(*))'),
   scrollTimeline: () => CSS.supports('animation-timeline: view()'),
   dialog: () => typeof HTMLDialogElement !== 'undefined',
-  popover: () => 'popover' in HTMLElement.prototype
+  popover: () => 'popover' in HTMLElement.prototype,
+  serviceWorker: () => 'serviceWorker' in navigator,
+  gamepad: () => 'getGamepads' in navigator
 };
 
 Object.entries(featureChecks).forEach(([key, check]) => {
@@ -397,8 +399,8 @@ document.querySelectorAll('[data-setting]').forEach((input) => {
 applySettings(savedSettings);
 
 // Launcher cache, controller uplink, neural optics, mission sync.
-if ('fieldCache' in navigator) {
-  navigator.fieldCache.register('./sw.js')
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js')
     .then(() => unlockAchievement('Launcher ready', 'Field cache synchronized'))
     .catch(() => {});
 }
@@ -469,15 +471,6 @@ window.addEventListener('gamepadconnected', updateGamepadStatus);
 window.addEventListener('gamepaddisconnected', updateGamepadStatus);
 updateGamepadStatus();
 
-featureChecks.fieldCache = () => 'fieldCache' in navigator;
-featureChecks.gamepad = () => 'getGamepads' in navigator;
-['fieldCache', 'gamepad'].forEach((key) => {
-  const badge = document.querySelector(`[data-feature="${key}"]`);
-  if (!badge) return;
-  const supported = featureChecks[key]();
-  badge.textContent = supported ? 'online' : 'standby';
-  badge.classList.toggle('unsupported', !supported);
-});
 
 
 // Final game interface systems.

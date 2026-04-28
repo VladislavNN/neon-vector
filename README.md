@@ -1,4 +1,4 @@
-﻿# NEON VECTOR
+# NEON VECTOR
 
 Static AAA cyberpunk game landing page.
 

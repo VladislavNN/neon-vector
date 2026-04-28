@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --bg: #05070a;
   --bg-2: #0a1016;
   --panel: rgba(9, 18, 25, 0.68);
@@ -1404,7 +1404,7 @@ body.high-contrast .map-stage img { filter: contrast(1.22) brightness(.78) satur
   .loadout-readout strong { font-size: 64px; }
 }
 
-/* PWA + cinematic browser demos. */
+/* PWA + cinematic game systems. */
 .mission-timeline {
   background:
     radial-gradient(circle at 24% 30%, rgba(255, 61, 200, .10), transparent 30rem),
@@ -2666,3 +2666,4 @@ body.high-contrast .map-stage img { filter: contrast(1.22) brightness(.78) satur
     width: 100%;
   }
 }
+
