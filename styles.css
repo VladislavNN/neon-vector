@@ -465,7 +465,7 @@ dd { margin: 0; color: var(--muted); text-align: right; }
   mix-blend-mode: screen;
 }
 .weapon-frame::after {
-  content: "BALLISTICS // ARC-9";
+  content: attr(data-weapon-label);
   position: absolute;
   left: 22px;
   bottom: 20px;
@@ -474,6 +474,14 @@ dd { margin: 0; color: var(--muted); text-align: right; }
   font-size: 12px;
   font-weight: 900;
   letter-spacing: .18em;
+}
+.weapon-frame img {
+  transition: opacity .22s ease, transform .45s ease, filter .35s ease;
+}
+.weapon-frame.is-switching img {
+  opacity: .22;
+  transform: scale(1.035);
+  filter: saturate(1.35) blur(2px);
 }
 .loadout-switcher { margin-top: 20px; }
 .gallery-strip {

@@ -611,28 +611,57 @@ document.querySelectorAll('.vision-hotspot').forEach((hotspot) => {
 
 // Weapon profile switcher for the arsenal readout.
 const weaponProfiles = {
-  arc: [
-    ['ARC-9 VANTA', 'rail pistol'],
-    ['0.18s', 'neural lock'],
-    ['5', 'ammo profiles']
-  ],
-  mono: [
-    ['MONO WIRE', 'close-range filament'],
-    ['12m', 'silent reach'],
-    ['3', 'counter modes']
-  ],
-  drone: [
-    ['WRAITH DRONE', 'autonomous scout'],
-    ['4', 'tagged targets'],
-    ['90s', 'stealth battery']
-  ]
+  arc: {
+    stats: [
+      ['ARC-9 VANTA', 'rail pistol'],
+      ['0.18s', 'neural lock'],
+      ['5', 'ammo profiles']
+    ],
+    image: 'assets/weapon-arc9.png',
+    alt: 'Футуристический рельсовый пистолет ARC-9 VANTA',
+    label: 'BALLISTICS // ARC-9'
+  },
+  mono: {
+    stats: [
+      ['MONO WIRE', 'close-range filament'],
+      ['12m', 'silent reach'],
+      ['3', 'counter modes']
+    ],
+    image: 'assets/weapon-monowire.png',
+    alt: 'Киберпанк монопроволока MONO WIRE в тактическом наручном модуле',
+    label: 'STEALTH // MONO WIRE'
+  },
+  drone: {
+    stats: [
+      ['WRAITH DRONE', 'autonomous scout'],
+      ['4', 'tagged targets'],
+      ['90s', 'stealth battery']
+    ],
+    image: 'assets/weapon-wraith-drone.png',
+    alt: 'Компактный разведывательный боевой дрон WRAITH DRONE на неоновой платформе',
+    label: 'RECON // WRAITH DRONE'
+  }
 };
 const weaponReadout = document.querySelector('[data-weapon-readout]');
+const weaponFrame = document.querySelector('[data-weapon-frame]');
+const weaponImage = document.querySelector('[data-weapon-image]');
 function selectWeaponProfile(profile) {
   const data = weaponProfiles[profile] || weaponProfiles.arc;
   document.querySelectorAll('[data-weapon]').forEach((button) => button.classList.toggle('active', button.dataset.weapon === profile));
   if (weaponReadout) {
-    weaponReadout.innerHTML = data.map(([value, label]) => `<span><b>${value}</b> ${label}</span>`).join('');
+    weaponReadout.innerHTML = data.stats.map(([value, label]) => `<span><b>${value}</b> ${label}</span>`).join('');
+  }
+  if (weaponFrame) {
+    weaponFrame.dataset.weaponLabel = data.label;
+  }
+  if (weaponImage && weaponImage.getAttribute('src') !== data.image) {
+    weaponFrame?.classList.add('is-switching');
+    window.setTimeout(() => {
+      weaponImage.src = data.image;
+      weaponImage.alt = data.alt;
+      weaponImage.onload = () => weaponFrame?.classList.remove('is-switching');
+      window.setTimeout(() => weaponFrame?.classList.remove('is-switching'), 420);
+    }, 120);
   }
   saveRouteState?.({ weapon: profile });
 }

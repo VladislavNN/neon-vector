@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'neon-vector-showcase-v10';
+﻿const CACHE_NAME = 'neon-vector-showcase-v11';
 const ASSETS = [
   './styles.css',
   './script.js',
@@ -7,6 +7,8 @@ const ASSETS = [
   './assets/street-district.png',
   './assets/city-map.png',
   './assets/weapon-arc9.png',
+  './assets/weapon-monowire.png',
+  './assets/weapon-wraith-drone.png',
   './assets/character-kael.png',
   './assets/character-mira.png',
   './assets/character-kira.png',
@@ -51,6 +53,7 @@ self.addEventListener('fetch', (event) => {
     }))
   );
 });
+
 
 
 
