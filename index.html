@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@85,500;100,700;112,900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=character-layout-fix2" />
   </head>
   <body>
     <div class="boot-screen" data-boot-screen aria-live="polite">
@@ -216,7 +216,13 @@
               <p class="eyebrow">Lead runner / close combat</p>
               <h3>KAEL RAIN</h3>
               <p>Бывший курьер Helix, который знает внутренние лифты шпиля, подпольные парковки и маршруты эвакуации лучше городских карт.</p>
-              <span>Reflex spine / rail pistol / street contracts</span><div class="ability-tabs"><button type="button" class="active" data-ability="dash">Dash break</button><button type="button" data-ability="parry">Bullet parry</button><button type="button" data-ability="deal">Street deal</button></div><p class="ability-readout" data-ability-readout="kael">Dash break: быстрый рывок через линию огня с окном контратаки.</p>
+              <span>Reflex spine / rail pistol / street contracts</span>
+              <div class="ability-tabs">
+                <button type="button" class="active" data-ability="dash">Dash break</button>
+                <button type="button" data-ability="parry">Bullet parry</button>
+                <button type="button" data-ability="deal">Street deal</button>
+              </div>
+              <p class="ability-readout" data-ability-readout="kael">Dash break: быстрый рывок через линию огня с окном контратаки.</p>
             </div>
           </article>
           <article class="hero-character reveal tilt-card">
@@ -225,7 +231,13 @@
               <p class="eyebrow">Netrunner / signal architect</p>
               <h3>MIRA VALE</h3>
               <p>Тихий архитектор взлома: открывает закрытые районы, подменяет профили охраны и превращает камеры города в союзников.</p>
-              <span>Neural deck / spoof identity / district control</span><div class="ability-tabs"><button type="button" class="active" data-ability="spoof">ID spoof</button><button type="button" data-ability="blind">Camera blind</button><button type="button" data-ability="puppet">Drone puppet</button></div><p class="ability-readout" data-ability-readout="mira">ID spoof: временно меняет профиль доступа в закрытых районах.</p>
+              <span>Neural deck / spoof identity / district control</span>
+              <div class="ability-tabs">
+                <button type="button" class="active" data-ability="spoof">ID spoof</button>
+                <button type="button" data-ability="blind">Camera blind</button>
+                <button type="button" data-ability="puppet">Drone puppet</button>
+              </div>
+              <p class="ability-readout" data-ability-readout="mira">ID spoof: временно меняет профиль доступа в закрытых районах.</p>
             </div>
           </article>
         </div>
@@ -568,6 +580,6 @@
     </dialog>
 
     <div class="toast-stack" data-toast-stack aria-live="polite" aria-atomic="true"></div>
-    <script src="script.js"></script>
+    <script src="script.js?v=character-layout-fix2"></script>
   </body>
 </html>

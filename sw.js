@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'neon-vector-showcase-v9';
+﻿const CACHE_NAME = 'neon-vector-showcase-v10';
 const ASSETS = [
   './styles.css',
   './script.js',
@@ -51,6 +51,7 @@ self.addEventListener('fetch', (event) => {
     }))
   );
 });
+
 
 
 
