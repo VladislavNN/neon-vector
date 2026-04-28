@@ -764,6 +764,8 @@ const soundToggle = document.querySelector('[data-sound-toggle]');
 const audioCard = document.querySelector('[data-audio-card]');
 const audioStatus = document.querySelector('[data-audio-status]');
 const audioPresetButtons = document.querySelectorAll('[data-audio-preset]');
+const uiClicksToggle = document.querySelector('[data-ui-clicks]');
+let uiClicksEnabled = uiClicksToggle?.checked ?? true;
 
 function createNoiseBuffer(context, seconds = 2) {
   const length = context.sampleRate * seconds;
@@ -778,6 +780,9 @@ function buildCityAudio() {
   const master = context.createGain();
   master.gain.value = 0.0001;
   master.connect(context.destination);
+  const sfxGain = context.createGain();
+  sfxGain.gain.value = 0.18;
+  sfxGain.connect(context.destination);
 
   const rain = context.createBufferSource();
   rain.buffer = createNoiseBuffer(context, 3);
@@ -811,7 +816,39 @@ function buildCityAudio() {
   drone.start();
   pulse.start();
 
-  return { context, master, rainGain, droneGain, pulseGain, drone, pulse };
+  return { context, master, sfxGain, rainGain, droneGain, pulseGain, drone, pulse };
+}
+
+async function ensureCityAudio() {
+  if (!cityAudio) cityAudio = buildCityAudio();
+  if (cityAudio.context.state === 'suspended') await cityAudio.context.resume();
+  return cityAudio;
+}
+
+async function playUIClick(kind = 'soft') {
+  if (!uiClicksEnabled) return;
+  const audio = await ensureCityAudio();
+  const now = audio.context.currentTime;
+  const click = audio.context.createOscillator();
+  const clickGain = audio.context.createGain();
+  const filter = audio.context.createBiquadFilter();
+  const settings = {
+    soft: { type: 'triangle', start: 720, end: 1280, gain: 0.045, time: 0.055 },
+    hard: { type: 'square', start: 220, end: 90, gain: 0.038, time: 0.075 },
+    confirm: { type: 'sine', start: 880, end: 1760, gain: 0.052, time: 0.09 }
+  }[kind] || { type: 'triangle', start: 720, end: 1280, gain: 0.045, time: 0.055 };
+  click.type = settings.type;
+  filter.type = 'bandpass';
+  filter.frequency.value = kind === 'hard' ? 420 : 1600;
+  filter.Q.value = kind === 'hard' ? 1.8 : 4.2;
+  click.frequency.setValueAtTime(settings.start, now);
+  click.frequency.exponentialRampToValueAtTime(settings.end, now + settings.time);
+  clickGain.gain.setValueAtTime(0.0001, now);
+  clickGain.gain.exponentialRampToValueAtTime(settings.gain, now + 0.008);
+  clickGain.gain.exponentialRampToValueAtTime(0.0001, now + settings.time);
+  click.connect(filter).connect(clickGain).connect(audio.sfxGain);
+  click.start(now);
+  click.stop(now + settings.time + 0.02);
 }
 
 function applyAudioPreset(preset) {
@@ -838,8 +875,7 @@ function applyAudioPreset(preset) {
 }
 
 async function toggleCityAudio() {
-  if (!cityAudio) cityAudio = buildCityAudio();
-  if (cityAudio.context.state === 'suspended') await cityAudio.context.resume();
+  await ensureCityAudio();
   const isActive = !audioCard?.classList.contains('active');
   if (isActive) {
     applyAudioPreset(activeAudioPreset);
@@ -857,7 +893,7 @@ async function toggleCityAudio() {
 
 soundToggle?.addEventListener('click', toggleCityAudio);
 audioCard?.addEventListener('click', (event) => {
-  if (event.target.closest('[data-audio-preset]')) return;
+  if (event.target.closest('[data-audio-preset], [data-ui-clicks]')) return;
   toggleCityAudio();
 });
 audioPresetButtons.forEach((button) => {
@@ -867,3 +903,16 @@ audioPresetButtons.forEach((button) => {
     unlockAchievement('Audio layer', `${button.textContent.trim()} channel selected`);
   });
 });
+uiClicksToggle?.addEventListener('change', () => {
+  uiClicksEnabled = uiClicksToggle.checked;
+  if (uiClicksEnabled) playUIClick('confirm');
+});
+document.addEventListener('pointerdown', (event) => {
+  const target = event.target.closest('button, a, summary, input, .mod-chip, .drop-slot, .map-pin, .faction-card');
+  if (!target) return;
+  if (target.matches('input[type="text"], input[type="email"]')) return;
+  const kind = target.matches('[data-edition], .btn.primary, [data-audio-preset], [data-sound-toggle]') ? 'confirm'
+    : target.matches('.map-pin, .drop-slot, .faction-card') ? 'hard'
+      : 'soft';
+  playUIClick(kind);
+}, { passive: true });

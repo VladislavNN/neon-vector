@@ -1710,6 +1710,52 @@ body.high-contrast .map-stage img { filter: contrast(1.22) brightness(.78) satur
   background: var(--green);
   border-color: transparent;
 }
+.audio-clicks {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-top: 14px;
+  padding: 11px 12px;
+  border: 1px solid rgba(126,245,255,.18);
+  border-radius: 18px;
+  color: var(--text);
+  background: rgba(2,7,10,.46);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.audio-clicks input {
+  width: 44px;
+  height: 24px;
+  appearance: none;
+  border: 1px solid rgba(126,245,255,.28);
+  border-radius: 999px;
+  background: rgba(255,255,255,.08);
+  position: relative;
+}
+.audio-clicks input::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #dffbff;
+  transition: transform .18s ease, background .18s ease;
+}
+.audio-clicks input:checked {
+  border-color: var(--green);
+  background: rgba(175,255,47,.22);
+}
+.audio-clicks input:checked::before {
+  transform: translateX(20px);
+  background: var(--green);
+}
 .audio-mix {
   position: relative;
   z-index: 1;

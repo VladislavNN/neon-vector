@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@85,500;100,700;112,900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=audio-soundfield" />
+    <link rel="stylesheet" href="styles.css?v=audio-clicks" />
   </head>
   <body>
     <div class="boot-screen" data-boot-screen aria-live="polite">
@@ -482,6 +482,7 @@
               <button type="button" data-audio-preset="drone">Drone</button>
               <button type="button" data-audio-preset="combat">Combat</button>
             </div>
+            <label class="audio-clicks"><input type="checkbox" data-ui-clicks checked /> UI click sounds</label>
             <div class="audio-mix" aria-hidden="true">
               <i style="--h: 38%"></i><i style="--h: 72%"></i><i style="--h: 52%"></i><i style="--h: 86%"></i>
             </div>
@@ -628,7 +629,7 @@
     </dialog>
 
     <div class="toast-stack" data-toast-stack aria-live="polite" aria-atomic="true"></div>
-    <script src="script.js?v=audio-soundfield"></script>
+    <script src="script.js?v=audio-clicks"></script>
   </body>
 </html>
 
