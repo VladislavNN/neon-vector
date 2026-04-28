@@ -1621,6 +1621,122 @@ body.high-contrast .map-stage img { filter: contrast(1.22) brightness(.78) satur
 }
 .gamepad-card strong { display: block; font-size: 22px; }
 .gamepad-card p { color: var(--muted); line-height: 1.6; }
+.audio-card {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  border: 1px solid rgba(126,245,255,.2);
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(66,248,255,.14), transparent 18rem),
+    linear-gradient(180deg, rgba(12,27,35,.8), rgba(4,9,12,.84));
+  box-shadow: var(--shadow);
+}
+.audio-card::after {
+  content: "";
+  position: absolute;
+  inset: auto -20% -28% 18%;
+  height: 170px;
+  background: radial-gradient(circle, rgba(175,255,47,.22), transparent 66%);
+  pointer-events: none;
+}
+.audio-card h3 {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: .92;
+  text-transform: uppercase;
+}
+.audio-card strong {
+  display: block;
+  margin-top: 16px;
+  font-size: 21px;
+}
+.audio-card p { color: var(--muted); line-height: 1.6; }
+.audio-orb {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  display: grid;
+  place-items: center;
+  margin: 18px 0;
+  border: 1px solid rgba(66,248,255,.32);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(66,248,255,.18), rgba(2,7,10,.44) 62%);
+}
+.audio-orb span {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #dffbff;
+  box-shadow: 0 0 36px rgba(126,245,255,.56);
+}
+.audio-orb i {
+  position: absolute;
+  inset: 16px;
+  border: 1px dashed rgba(175,255,47,.3);
+  border-radius: 50%;
+  animation: spin 9s linear infinite;
+}
+.audio-card.active {
+  border-color: rgba(175,255,47,.48);
+  box-shadow: 0 24px 92px rgba(175,255,47,.12);
+}
+.audio-card.active .audio-orb span {
+  background: var(--green);
+  box-shadow: 0 0 58px rgba(175,255,47,.72);
+}
+.audio-presets {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+.audio-presets button {
+  border: 1px solid rgba(126,245,255,.24);
+  border-radius: 999px;
+  padding: 9px 12px;
+  color: var(--text);
+  background: rgba(2,7,10,.62);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .08em;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+.audio-presets button.active {
+  color: #061014;
+  background: var(--green);
+  border-color: transparent;
+}
+.audio-mix {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: end;
+  gap: 7px;
+  height: 54px;
+  margin-top: 16px;
+}
+.audio-mix i {
+  flex: 1;
+  height: var(--h);
+  border-radius: 999px 999px 8px 8px;
+  background: linear-gradient(180deg, var(--cyan), rgba(175,255,47,.16));
+  opacity: .5;
+  transform-origin: bottom;
+}
+.audio-card.active .audio-mix i {
+  animation: audioBars .72s ease-in-out infinite alternate;
+  opacity: .9;
+}
+.audio-card.active .audio-mix i:nth-child(2) { animation-delay: .14s; }
+.audio-card.active .audio-mix i:nth-child(3) { animation-delay: .26s; }
+.audio-card.active .audio-mix i:nth-child(4) { animation-delay: .38s; }
+@keyframes audioBars {
+  to { transform: scaleY(.58); filter: hue-rotate(32deg); }
+}
 @keyframes spin { to { transform: rotate(1turn); } }
 @media (max-width: 920px) {
   .timeline-stage { grid-template-columns: 1fr; }

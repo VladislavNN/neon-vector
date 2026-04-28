@@ -758,27 +758,112 @@ document.querySelectorAll('[data-edition]').forEach((button) => {
   });
 });
 
-let audioContext;
-let oscillator;
-let gainNode;
-document.querySelector('[data-sound-toggle]')?.addEventListener('click', async (event) => {
-  const button = event.currentTarget;
-  if (!audioContext) {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    oscillator = audioContext.createOscillator();
-    gainNode = audioContext.createGain();
-    oscillator.type = 'sine';
-    oscillator.frequency.value = 72;
-    gainNode.gain.value = 0.018;
-    oscillator.connect(gainNode).connect(audioContext.destination);
-    oscillator.start();
-    button.classList.add('active');
-    unlockAchievement('City signal', 'Ambient channel opened');
-  } else if (audioContext.state === 'running') {
-    await audioContext.suspend();
-    button.classList.remove('active');
+let cityAudio;
+let activeAudioPreset = 'rain';
+const soundToggle = document.querySelector('[data-sound-toggle]');
+const audioCard = document.querySelector('[data-audio-card]');
+const audioStatus = document.querySelector('[data-audio-status]');
+const audioPresetButtons = document.querySelectorAll('[data-audio-preset]');
+
+function createNoiseBuffer(context, seconds = 2) {
+  const length = context.sampleRate * seconds;
+  const buffer = context.createBuffer(1, length, context.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < length; i += 1) data[i] = Math.random() * 2 - 1;
+  return buffer;
+}
+
+function buildCityAudio() {
+  const context = new (window.AudioContext || window.webkitAudioContext)();
+  const master = context.createGain();
+  master.gain.value = 0.0001;
+  master.connect(context.destination);
+
+  const rain = context.createBufferSource();
+  rain.buffer = createNoiseBuffer(context, 3);
+  rain.loop = true;
+  const rainFilter = context.createBiquadFilter();
+  rainFilter.type = 'bandpass';
+  rainFilter.frequency.value = 950;
+  rainFilter.Q.value = 0.7;
+  const rainGain = context.createGain();
+  rainGain.gain.value = 0.026;
+  rain.connect(rainFilter).connect(rainGain).connect(master);
+
+  const drone = context.createOscillator();
+  drone.type = 'sawtooth';
+  drone.frequency.value = 46;
+  const droneFilter = context.createBiquadFilter();
+  droneFilter.type = 'lowpass';
+  droneFilter.frequency.value = 190;
+  const droneGain = context.createGain();
+  droneGain.gain.value = 0.012;
+  drone.connect(droneFilter).connect(droneGain).connect(master);
+
+  const pulse = context.createOscillator();
+  pulse.type = 'square';
+  pulse.frequency.value = 1.8;
+  const pulseGain = context.createGain();
+  pulseGain.gain.value = 0.004;
+  pulse.connect(pulseGain).connect(master);
+
+  rain.start();
+  drone.start();
+  pulse.start();
+
+  return { context, master, rainGain, droneGain, pulseGain, drone, pulse };
+}
+
+function applyAudioPreset(preset) {
+  activeAudioPreset = preset;
+  audioPresetButtons.forEach((button) => button.classList.toggle('active', button.dataset.audioPreset === preset));
+  if (!cityAudio) return;
+  const values = {
+    rain: { master: 0.12, rain: 0.03, drone: 0.008, pulse: 0.002, droneHz: 44, pulseHz: 1.2, label: 'Rain channel online' },
+    drone: { master: 0.13, rain: 0.014, drone: 0.018, pulse: 0.003, droneHz: 58, pulseHz: 1.7, label: 'Drone patrol channel online' },
+    combat: { master: 0.15, rain: 0.018, drone: 0.014, pulse: 0.008, droneHz: 72, pulseHz: 3.4, label: 'Combat pulse channel online' }
+  }[preset];
+  const now = cityAudio.context.currentTime;
+  cityAudio.master.gain.cancelScheduledValues(now);
+  cityAudio.rainGain.gain.cancelScheduledValues(now);
+  cityAudio.droneGain.gain.cancelScheduledValues(now);
+  cityAudio.pulseGain.gain.cancelScheduledValues(now);
+  cityAudio.master.gain.linearRampToValueAtTime(values.master, now + 0.18);
+  cityAudio.rainGain.gain.linearRampToValueAtTime(values.rain, now + 0.18);
+  cityAudio.droneGain.gain.linearRampToValueAtTime(values.drone, now + 0.18);
+  cityAudio.pulseGain.gain.linearRampToValueAtTime(values.pulse, now + 0.18);
+  cityAudio.drone.frequency.linearRampToValueAtTime(values.droneHz, now + 0.22);
+  cityAudio.pulse.frequency.linearRampToValueAtTime(values.pulseHz, now + 0.22);
+  if (audioStatus) audioStatus.textContent = values.label;
+}
+
+async function toggleCityAudio() {
+  if (!cityAudio) cityAudio = buildCityAudio();
+  if (cityAudio.context.state === 'suspended') await cityAudio.context.resume();
+  const isActive = !audioCard?.classList.contains('active');
+  if (isActive) {
+    applyAudioPreset(activeAudioPreset);
+    soundToggle?.classList.add('active');
+    audioCard?.classList.add('active');
+    unlockAchievement('City signal', 'Ambient soundfield opened');
   } else {
-    await audioContext.resume();
-    button.classList.add('active');
+    const now = cityAudio.context.currentTime;
+    cityAudio.master.gain.linearRampToValueAtTime(0.0001, now + 0.16);
+    soundToggle?.classList.remove('active');
+    audioCard?.classList.remove('active');
+    if (audioStatus) audioStatus.textContent = 'Сигнал заглушен';
   }
+}
+
+soundToggle?.addEventListener('click', toggleCityAudio);
+audioCard?.addEventListener('click', (event) => {
+  if (event.target.closest('[data-audio-preset]')) return;
+  toggleCityAudio();
+});
+audioPresetButtons.forEach((button) => {
+  button.addEventListener('click', async () => {
+    if (!cityAudio || !audioCard?.classList.contains('active')) await toggleCityAudio();
+    applyAudioPreset(button.dataset.audioPreset);
+    unlockAchievement('Audio layer', `${button.textContent.trim()} channel selected`);
+  });
 });

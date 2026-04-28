@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@85,500;100,700;112,900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=full-audit-fix" />
+    <link rel="stylesheet" href="styles.css?v=audio-soundfield" />
   </head>
   <body>
     <div class="boot-screen" data-boot-screen aria-live="polite">
@@ -471,6 +471,21 @@
             <strong data-gamepad-status>Геймпад не подключен</strong>
             <p>Подключи контроллер и нажми любую кнопку: костюм проверит канал управления и отклик модулей.</p>
           </article>
+          <article class="audio-card reveal" data-audio-card>
+            <p class="eyebrow">City signal audio</p>
+            <h3>Veyra soundfield</h3>
+            <div class="audio-orb" aria-hidden="true"><span></span><i></i></div>
+            <strong data-audio-status>Сигнал заглушен</strong>
+            <p>Включи аудиоканал: дождь, дроны и боевой импульс смешиваются в живой фон Veyra-9.</p>
+            <div class="audio-presets" aria-label="Аудио слои города">
+              <button type="button" data-audio-preset="rain" class="active">Rain</button>
+              <button type="button" data-audio-preset="drone">Drone</button>
+              <button type="button" data-audio-preset="combat">Combat</button>
+            </div>
+            <div class="audio-mix" aria-hidden="true">
+              <i style="--h: 38%"></i><i style="--h: 72%"></i><i style="--h: 52%"></i><i style="--h: 86%"></i>
+            </div>
+          </article>
           <article class="settings-card reveal">
             <p class="eyebrow">Suit preferences</p>
             <h3>Control room</h3>
@@ -613,7 +628,7 @@
     </dialog>
 
     <div class="toast-stack" data-toast-stack aria-live="polite" aria-atomic="true"></div>
-    <script src="script.js?v=full-audit-fix"></script>
+    <script src="script.js?v=audio-soundfield"></script>
   </body>
 </html>
 
