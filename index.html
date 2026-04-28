@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="NEON VECTOR: AAA киберпанк action-RPG о рейдах, фракциях и живом городе Veyra-9." />
     <meta name="theme-color" content="#05070a" />
+    <meta property="og:title" content="NEON VECTOR | AAA Cyberpunk Game" />
+    <meta property="og:description" content="Рейды, фракции и живой мегаполис Veyra-9 в кинематографичной cyberpunk action-RPG." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="assets/hero-city.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="preload" as="image" href="assets/hero-city.png" />
     <title>NEON VECTOR | AAA Cyberpunk Game</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -76,6 +83,9 @@
             <span><strong>9</strong> районов</span>
             <span><strong>180+</strong> имплантов</span>
           </div>
+          <div class="release-strip" aria-label="Платформы и статус релиза">
+            <span>PC</span><span>PS5</span><span>Xbox Series</span><span>Wishlist open</span>
+          </div>
         </div>
         <aside class="hero-panel reveal" aria-label="Данные миссии">
           <span class="panel-kicker">Live contract</span>
@@ -142,19 +152,19 @@
             <p class="eyebrow">Adaptive arsenal</p>
             <h2 id="arsenal-title">Оружие собирается под стиль, а не под меню.</h2>
             <p class="lead">Каждый модуль меняет поведение: рикошеты по мокрому металлу, перегрев имплантов врага, тихий импульс для стелса или громкий разгон для открытой войны.</p>
-            <div class="stat-stack">
+            <div class="stat-stack" data-weapon-readout>
               <span><b>ARC-9 VANTA</b> rail pistol</span>
               <span><b>0.18s</b> neural lock</span>
               <span><b>5</b> ammo profiles</span>
             </div>
-            <div class="loadout-switcher" aria-label="Боевые режимы">
-              <button class="active" type="button" data-loadout="stealth">Ghost</button>
-              <button type="button" data-loadout="shock">Shock</button>
-              <button type="button" data-loadout="riot">Riot</button>
+            <div class="loadout-switcher weapon-tabs" aria-label="Оружейные профили">
+              <button class="active" type="button" data-weapon="arc">ARC-9</button>
+              <button type="button" data-weapon="mono">MONO WIRE</button>
+              <button type="button" data-weapon="drone">WRAITH DRONE</button>
             </div>
           </div>
           <div class="weapon-frame reveal tilt-card">
-            <img src="assets/weapon-arc9.png" alt="Футуристический рельсовый пистолет ARC-9 VANTA" />
+            <img src="assets/weapon-arc9.png" alt="Футуристический рельсовый пистолет ARC-9 VANTA" width="1915" height="821" loading="lazy" decoding="async" />
           </div>
         </div>
       </section>
@@ -191,7 +201,7 @@
         </div>
         <div class="character-duo">
           <article class="hero-character reveal tilt-card">
-            <img src="assets/character-kael.png" alt="Каэль Рейн, главный герой NEON VECTOR в киберпанк-одежде" />
+            <img src="assets/character-kael.png" alt="Каэль Рейн, главный герой NEON VECTOR в киберпанк-одежде" width="935" height="1683" loading="lazy" decoding="async" />
             <div>
               <p class="eyebrow">Lead runner / close combat</p>
               <h3>KAEL RAIN</h3>
@@ -200,7 +210,7 @@
             </div>
           </article>
           <article class="hero-character reveal tilt-card">
-            <img src="assets/character-mira.png" alt="Мира Вейл, главная героиня NEON VECTOR с cyberdeck и нейроимплантом" />
+            <img src="assets/character-mira.png" alt="Мира Вейл, главная героиня NEON VECTOR с cyberdeck и нейроимплантом" width="809" height="1942" loading="lazy" decoding="async" />
             <div>
               <p class="eyebrow">Netrunner / signal architect</p>
               <h3>MIRA VALE</h3>
@@ -251,7 +261,7 @@
           <h2 id="neural-title">Переключи обычное зрение на neural overlay.</h2>
         </div>
         <div class="vision-slider reveal" data-vision-slider style="--split: 52%">
-          <img src="assets/street-district.png" alt="Киберпанк-улица без нейронного оверлея" />
+          <img src="assets/street-district.png" alt="Киберпанк-улица без нейронного оверлея" width="1672" height="941" loading="lazy" decoding="async" />
           <div class="vision-layer" aria-hidden="true"></div>
           <button class="vision-handle" type="button" aria-label="Перетащить сравнение"><span></span></button>
           <div class="vision-label left">Human optics</div>
@@ -269,7 +279,7 @@
         </div>
         <div class="map-shell reveal" data-map-shell>
           <div class="map-stage">
-            <img src="assets/city-map.png" alt="Голографическая карта киберпанк-города Veyra-9" />
+            <img src="assets/city-map.png" alt="Голографическая карта киберпанк-города Veyra-9" width="1694" height="928" loading="lazy" decoding="async" />
           </div>
           <div class="map-orbit" aria-hidden="true"></div>
           <button class="map-pin active" style="--x: 51%; --y: 43%" data-district="Helix Spire" aria-label="Helix Spire"><span>01</span></button>
@@ -293,7 +303,7 @@
           <p class="eyebrow">PC requirements</p>
           <h2 id="specs-title">Системные требования</h2>
         </div>
-        <div class="spec-grid">
+        <div class="spec-grid spec-grid-four">
           <article class="spec-card reveal">
             <h3>Minimum / 1080p</h3>
             <dl>
@@ -303,6 +313,15 @@
               <div><dt>Storage</dt><dd>95 GB SSD</dd></div>
             </dl>
           </article>
+          <article class="spec-card reveal">
+            <h3>Recommended / 1440p</h3>
+            <dl>
+              <div><dt>CPU</dt><dd>Ryzen 5 7600 / i5-13600K</dd></div>
+              <div><dt>GPU</dt><dd>RTX 4070 / RX 7800 XT</dd></div>
+              <div><dt>RAM</dt><dd>16 GB</dd></div>
+              <div><dt>Storage</dt><dd>95 GB NVMe SSD</dd></div>
+            </dl>
+          </article>
           <article class="spec-card featured reveal">
             <h3>Ultra / 4K RT</h3>
             <dl>
@@ -310,6 +329,15 @@
               <div><dt>GPU</dt><dd>RTX 4080 Super / RX 7900 XTX</dd></div>
               <div><dt>RAM</dt><dd>32 GB</dd></div>
               <div><dt>Storage</dt><dd>95 GB NVMe SSD</dd></div>
+            </dl>
+          </article>
+          <article class="spec-card reveal">
+            <h3>Overdrive / 4K PT</h3>
+            <dl>
+              <div><dt>CPU</dt><dd>Ryzen 9 7950X3D / i9-14900K</dd></div>
+              <div><dt>GPU</dt><dd>RTX 4090 / next-gen flagship</dd></div>
+              <div><dt>RAM</dt><dd>32 GB+</dd></div>
+              <div><dt>Storage</dt><dd>DirectStorage NVMe</dd></div>
             </dl>
           </article>
         </div>
@@ -459,6 +487,27 @@
         <div class="gallery-card reveal"><span>04</span><strong>Neural choices</strong></div>
       </section>
     </main>
+
+    <footer class="site-footer" aria-label="Финальная информация">
+      <div>
+        <a class="brand" href="#top" aria-label="NEON VECTOR home">
+          <span class="brand-mark">NV</span>
+          <span>NEON VECTOR</span>
+        </a>
+        <p>Veyra-9 opens when the signal turns green.</p>
+      </div>
+      <nav aria-label="Ссылки футера">
+        <a href="#trailer">Trailer</a>
+        <a href="#characters">Heroes</a>
+        <a href="#city">City map</a>
+        <a href="#specs">PC specs</a>
+      </nav>
+      <div class="footer-meta">
+        <span>PC / PS5 / Xbox Series</span>
+        <span>Rating pending</span>
+        <span>© 2089 Vector North Interactive</span>
+      </div>
+    </footer>
 
     <dialog class="trailer-modal" data-trailer-modal aria-label="Трейлер NEON VECTOR">
       <button class="modal-close" data-close-trailer aria-label="Закрыть трейлер">×</button>

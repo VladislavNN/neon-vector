@@ -608,3 +608,38 @@ document.querySelectorAll('.vision-hotspot').forEach((hotspot) => {
 
 
 
+
+// Weapon profile switcher for the arsenal readout.
+const weaponProfiles = {
+  arc: [
+    ['ARC-9 VANTA', 'rail pistol'],
+    ['0.18s', 'neural lock'],
+    ['5', 'ammo profiles']
+  ],
+  mono: [
+    ['MONO WIRE', 'close-range filament'],
+    ['12m', 'silent reach'],
+    ['3', 'counter modes']
+  ],
+  drone: [
+    ['WRAITH DRONE', 'autonomous scout'],
+    ['4', 'tagged targets'],
+    ['90s', 'stealth battery']
+  ]
+};
+const weaponReadout = document.querySelector('[data-weapon-readout]');
+function selectWeaponProfile(profile) {
+  const data = weaponProfiles[profile] || weaponProfiles.arc;
+  document.querySelectorAll('[data-weapon]').forEach((button) => button.classList.toggle('active', button.dataset.weapon === profile));
+  if (weaponReadout) {
+    weaponReadout.innerHTML = data.map(([value, label]) => `<span><b>${value}</b> ${label}</span>`).join('');
+  }
+  saveRouteState?.({ weapon: profile });
+}
+document.querySelectorAll('[data-weapon]').forEach((button) => {
+  button.addEventListener('click', () => {
+    selectWeaponProfile(button.dataset.weapon);
+    unlockAchievement('Weapon profile', `${button.textContent.trim()} armed`);
+  });
+});
+if (routeState?.weapon) selectWeaponProfile(routeState.weapon);
