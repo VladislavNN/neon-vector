@@ -1,0 +1,17 @@
+﻿{
+  "name": "NEON VECTOR Browser Showcase",
+  "short_name": "NEON VECTOR",
+  "description": "AAA cyberpunk game landing page showcasing modern browser APIs.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#05070a",
+  "theme_color": "#afff2f",
+  "icons": [
+    {
+      "src": "assets/hero-city.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

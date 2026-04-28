@@ -1,0 +1,500 @@
+﻿<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="NEON VECTOR: AAA киберпанк action-RPG о рейдах, фракциях и живом городе Veyra-9." />
+    <meta name="theme-color" content="#05070a" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <title>NEON VECTOR | AAA Cyberpunk Game</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@85,500;100,700;112,900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="boot-screen" data-boot-screen aria-live="polite">
+      <div><span>NEON VECTOR</span><strong data-boot-line>loading city mesh</strong><i></i></div>
+    </div>
+    <div class="page-progress" data-progress aria-hidden="true"></div>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="scanline" aria-hidden="true"></div>
+    <canvas class="signal-canvas" data-signal-canvas aria-hidden="true"></canvas>
+    <div class="cursor" aria-hidden="true"></div>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="#top" aria-label="NEON VECTOR home">
+        <span class="brand-mark">NV</span>
+        <span>NEON VECTOR</span>
+      </a>
+      <nav class="main-nav" aria-label="Главная навигация">
+        <a href="#trailer">Трейлер</a>
+        <a href="#factions">Фракции</a>
+        <a href="#arsenal">Арсенал</a>
+        <a href="#characters">Герои</a>
+        <a href="#city">Карта</a>
+        <a href="#timeline">Mission</a>
+        <a href="#browser-lab">Deck</a>
+        <a href="#design-system">Codex</a>
+        <a href="#faq">FAQ</a>
+        <a href="#specs">PC</a>
+      </nav>
+      <a class="nav-cta magnetic" href="#buy">В wishlist</a>
+    </header>
+
+    <nav class="mobile-dock" aria-label="Быстрая навигация">
+      <a href="#trailer">Play</a>
+      <a href="#factions">Clans</a>
+      <a href="#city">Map</a>
+      <a href="#timeline">Run</a>
+      <a href="#browser-lab">Deck</a>
+      <a href="#design-system">Codex</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <button class="command-fab magnetic" type="button" data-open-command aria-label="Открыть quick deck">⌘K</button>
+    <aside class="perf-hud" data-perf-hud aria-label="Монитор костюма">
+      <span>FPS <b data-fps>--</b></span>
+      <span>SW <b data-sw-status>scan</b></span>
+      <span>Cache <b data-cache-status>scan</b></span>
+    </aside>
+
+    <main id="top">
+      <section class="hero section" aria-labelledby="hero-title">
+        <div class="hero-bg" aria-hidden="true"></div>
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-content reveal">
+          <p class="eyebrow">Signal found / Veyra-9 megacity / 2089</p>
+          <h1 id="hero-title">Будущее уже взломало тебя.</h1>
+          <p class="hero-copy">NEON VECTOR - кинематографичная action-RPG в открытом городе, где корпорации продают память, банды торгуют личностями, а каждый выстрел меняет баланс района.</p>
+          <div class="hero-actions">
+            <button class="btn primary magnetic" data-open-trailer>Смотреть трейлер</button>
+            <a class="btn ghost magnetic" href="#city">Исследовать Veyra-9</a>
+          </div>
+          <div class="hero-metrics" aria-label="Ключевые особенности">
+            <span><strong>72</strong> сюжетных развилки</span>
+            <span><strong>9</strong> районов</span>
+            <span><strong>180+</strong> имплантов</span>
+          </div>
+        </div>
+        <aside class="hero-panel reveal" aria-label="Данные миссии">
+          <span class="panel-kicker">Live contract</span>
+          <h2><span>Glass</span><span>Saint</span></h2>
+          <p>Цель: украсть ядро ИИ из шпиля Helix и пережить ночь, когда весь город получает цену за твою голову.</p>
+          <div class="signal-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+          <div class="threat-meter" aria-label="Уровень угрозы"><i></i><b>Threat 87%</b></div>
+        </aside>
+      </section>
+
+      <section class="marquee" aria-label="Платформы и технологии">
+        <div>
+          <span>Ray traced rain</span><span>Neural stealth</span><span>Reactive districts</span><span>Branching contracts</span><span>Next-gen combat</span>
+          <span>Ray traced rain</span><span>Neural stealth</span><span>Reactive districts</span><span>Branching contracts</span><span>Next-gen combat</span>
+        </div>
+      </section>
+
+      <section class="section trailer" id="trailer" aria-labelledby="trailer-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">World premiere trailer</p>
+          <h2 id="trailer-title">90 секунд города, который охотится на тебя.</h2>
+        </div>
+        <button class="trailer-card reveal magnetic" data-open-trailer aria-label="Открыть трейлер">
+          <span class="play-icon" aria-hidden="true"></span>
+          <span class="trailer-meta">4K capture / in-engine / no safe zones</span>
+        </button>
+      </section>
+
+      <section class="section factions" id="factions" aria-labelledby="factions-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Choose your liability</p>
+          <h2 id="factions-title">Фракции не дают квесты. Они выставляют счета.</h2>
+        </div>
+        <div class="faction-tabs reveal" role="list" aria-label="Состояние влияния фракций">
+          <button class="active" type="button">Influence</button>
+          <button type="button">Contracts</button>
+          <button type="button">Heat</button>
+        </div>
+        <div class="card-grid three">
+          <article class="faction-card reveal" style="--accent: var(--cyan)">
+            <span class="card-index">01</span>
+            <span class="faction-sigil">HX</span>
+            <h3>Helix Directorate</h3>
+            <p>Корпоративные архитекторы города. Их солдаты не промахиваются, потому что покупают исход боя заранее.</p>
+          </article>
+          <article class="faction-card reveal" style="--accent: var(--orange)">
+            <span class="card-index">02</span>
+            <span class="faction-sigil">CS</span>
+            <h3>Chrome Saints</h3>
+            <p>Культ уличных хирургов и нелегальных апгрейдов. Верят, что душа - это устаревшая прошивка.</p>
+          </article>
+          <article class="faction-card reveal" style="--accent: var(--pink)">
+            <span class="card-index">03</span>
+            <span class="faction-sigil">NC</span>
+            <h3>Null Choir</h3>
+            <p>Невидимая сеть нетраннеров. Они стирают людей из камер, банков и воспоминаний.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section arsenal" id="arsenal" aria-labelledby="arsenal-title">
+        <div class="split-layout">
+          <div class="reveal">
+            <p class="eyebrow">Adaptive arsenal</p>
+            <h2 id="arsenal-title">Оружие собирается под стиль, а не под меню.</h2>
+            <p class="lead">Каждый модуль меняет поведение: рикошеты по мокрому металлу, перегрев имплантов врага, тихий импульс для стелса или громкий разгон для открытой войны.</p>
+            <div class="stat-stack">
+              <span><b>ARC-9 VANTA</b> rail pistol</span>
+              <span><b>0.18s</b> neural lock</span>
+              <span><b>5</b> ammo profiles</span>
+            </div>
+            <div class="loadout-switcher" aria-label="Боевые режимы">
+              <button class="active" type="button" data-loadout="stealth">Ghost</button>
+              <button type="button" data-loadout="shock">Shock</button>
+              <button type="button" data-loadout="riot">Riot</button>
+            </div>
+          </div>
+          <div class="weapon-frame reveal tilt-card">
+            <img src="assets/weapon-arc9.png" alt="Футуристический рельсовый пистолет ARC-9 VANTA" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section loadout-lab" id="loadout-lab" aria-labelledby="loadout-lab-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Modular armory</p>
+          <h2 id="loadout-lab-title">Собери билд для ночного рейда.</h2>
+        </div>
+        <div class="loadout-board reveal">
+          <div class="mod-bank" aria-label="Модули оружия">
+            <button class="mod-chip" draggable="true" type="button" data-mod="Neural Scope">Neural Scope</button>
+            <button class="mod-chip" draggable="true" type="button" data-mod="Pulse Rail">Pulse Rail</button>
+            <button class="mod-chip" draggable="true" type="button" data-mod="Ghost Suppressor">Ghost Suppressor</button>
+            <button class="mod-chip" draggable="true" type="button" data-mod="Overheat Core">Overheat Core</button>
+          </div>
+          <div class="weapon-slots" aria-label="Слоты сборки оружия">
+            <div class="drop-slot" data-slot="optic"><span>Optic slot</span></div>
+            <div class="drop-slot" data-slot="barrel"><span>Barrel slot</span></div>
+            <div class="drop-slot" data-slot="core"><span>Core slot</span></div>
+          </div>
+          <div class="loadout-readout">
+            <span>Build telemetry</span>
+            <strong data-loadout-score>00%</strong>
+            <p data-loadout-summary>Перетащи модули в слоты или нажми на модуль, чтобы собрать билд на touch-устройствах.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section characters" id="characters" aria-labelledby="characters-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Playable ghosts</p>
+          <h2 id="characters-title">Персонажи с прошлым, которое можно переписать.</h2>
+        </div>
+        <div class="character-duo">
+          <article class="hero-character reveal tilt-card">
+            <img src="assets/character-kael.png" alt="Каэль Рейн, главный герой NEON VECTOR в киберпанк-одежде" />
+            <div>
+              <p class="eyebrow">Lead runner / close combat</p>
+              <h3>KAEL RAIN</h3>
+              <p>Бывший курьер Helix, который знает внутренние лифты шпиля, подпольные парковки и маршруты эвакуации лучше городских карт.</p>
+              <span>Reflex spine / rail pistol / street contracts</span>
+            </div>
+          </article>
+          <article class="hero-character reveal tilt-card">
+            <img src="assets/character-mira.png" alt="Мира Вейл, главная героиня NEON VECTOR с cyberdeck и нейроимплантом" />
+            <div>
+              <p class="eyebrow">Netrunner / signal architect</p>
+              <h3>MIRA VALE</h3>
+              <p>Тихий архитектор взлома: открывает закрытые районы, подменяет профили охраны и превращает камеры города в союзников.</p>
+              <span>Neural deck / spoof identity / district control</span>
+            </div>
+          </article>
+        </div>
+        <div class="perk-list character-systems reveal">
+          <h3>Dual-protagonist runs</h3>
+          <p>Контракты можно проходить как одним героем, так и дуэтом: Каэль держит улицу, Мира ломает городскую сеть.</p>
+          <ul>
+            <li>Kael route: ближний бой, погони, силовые входы и рискованные сделки с фракциями.</li>
+            <li>Mira route: скрытые маршруты, подмена камер, социальный взлом и контроль районной тревоги.</li>
+            <li>Duo route: синхронные миссии, где один герой меняет физический мир, а второй переписывает цифровой.</li>
+          </ul>
+        </div>
+      </section>
+
+
+
+      <section class="section mission-timeline" id="timeline" aria-labelledby="timeline-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Scroll-driven mission</p>
+          <h2 id="timeline-title">Одна миссия. Четыре состояния города.</h2>
+        </div>
+        <div class="timeline-stage reveal">
+          <div class="timeline-visual" aria-hidden="true">
+            <div class="timeline-core"><span data-timeline-state>01</span></div>
+            <div class="timeline-rings"></div>
+            <div class="timeline-meta">
+              <span data-timeline-zone>Null Choir mesh</span>
+              <strong data-timeline-threat>Threat 22%</strong>
+            </div>
+          </div>
+          <div class="timeline-steps">
+            <article data-step="01" data-zone="Null Choir mesh" data-threat="Threat 22%" data-tone="trace"><span>01 / TRACE</span><h3>Signal breach</h3><p>Контракт появляется в сети Null Choir, город еще не знает, что цель уже выбрана.</p></article>
+            <article data-step="02" data-zone="Helix Spire" data-threat="Threat 48%" data-tone="infiltrate"><span>02 / INFILTRATE</span><h3>Glass elevator</h3><p>Игрок поднимается через корпоративный шпиль, а районы начинают менять patrol routes.</p></article>
+            <article data-step="03" data-zone="City lockdown" data-threat="Threat 87%" data-tone="lockdown"><span>03 / LOCKDOWN</span><h3>District heat</h3><p>Helix закрывает мосты, дроны включают searchlight-сетки, толпа реагирует на тревогу.</p></article>
+            <article data-step="04" data-zone="Memory fork" data-threat="Threat 63%" data-tone="escape"><span>04 / ESCAPE</span><h3>Memory fork</h3><p>Финал зависит от того, кого ты стер из системы и какой район оставил без защиты.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section neural-vision" id="neural-vision" aria-labelledby="neural-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Neural optics</p>
+          <h2 id="neural-title">Переключи обычное зрение на neural overlay.</h2>
+        </div>
+        <div class="vision-slider reveal" data-vision-slider style="--split: 52%">
+          <img src="assets/street-district.png" alt="Киберпанк-улица без нейронного оверлея" />
+          <div class="vision-layer" aria-hidden="true"></div>
+          <button class="vision-handle" type="button" aria-label="Перетащить сравнение"><span></span></button>
+          <div class="vision-label left">Human optics</div>
+          <div class="vision-label right">Neural scan</div>
+          <button class="vision-hotspot" style="--x: 30%; --y: 52%" type="button" data-hotspot="Drone route">Drone route</button>
+          <button class="vision-hotspot" style="--x: 62%; --y: 38%" type="button" data-hotspot="Hidden vendor">Hidden vendor</button>
+          <button class="vision-hotspot" style="--x: 76%; --y: 68%" type="button" data-hotspot="Extraction path">Extraction path</button>
+        </div>
+      </section>
+
+      <section class="section city" id="city" aria-labelledby="city-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Open world map</p>
+          <h2 id="city-title">Veyra-9 реагирует на каждую ошибку.</h2>
+        </div>
+        <div class="map-shell reveal" data-map-shell>
+          <div class="map-stage">
+            <img src="assets/city-map.png" alt="Голографическая карта киберпанк-города Veyra-9" />
+          </div>
+          <div class="map-orbit" aria-hidden="true"></div>
+          <button class="map-pin active" style="--x: 51%; --y: 43%" data-district="Helix Spire" aria-label="Helix Spire"><span>01</span></button>
+          <button class="map-pin" style="--x: 25%; --y: 62%" data-district="Rust Docks" aria-label="Rust Docks"><span>02</span></button>
+          <button class="map-pin" style="--x: 75%; --y: 63%" data-district="Null Market" aria-label="Null Market"><span>03</span></button>
+          <div class="map-districts" aria-label="Районы Veyra-9">
+            <button class="active" type="button" data-district="Helix Spire">Helix Spire <small>Corporate vertical</small></button>
+            <button type="button" data-district="Rust Docks">Rust Docks <small>Smuggler coast</small></button>
+            <button type="button" data-district="Null Market">Null Market <small>Identity black market</small></button>
+          </div>
+          <div class="district-panel" data-district-panel>
+            <span>District feed</span>
+            <strong>Helix Spire</strong>
+            <p>Вертикальный корпоративный район: чистый воздух наверху, вечная ночь внизу.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section specs" id="specs" aria-labelledby="specs-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">PC requirements</p>
+          <h2 id="specs-title">Системные требования</h2>
+        </div>
+        <div class="spec-grid">
+          <article class="spec-card reveal">
+            <h3>Minimum / 1080p</h3>
+            <dl>
+              <div><dt>CPU</dt><dd>Ryzen 5 3600 / i5-10400F</dd></div>
+              <div><dt>GPU</dt><dd>RTX 2060 / RX 6600</dd></div>
+              <div><dt>RAM</dt><dd>16 GB</dd></div>
+              <div><dt>Storage</dt><dd>95 GB SSD</dd></div>
+            </dl>
+          </article>
+          <article class="spec-card featured reveal">
+            <h3>Ultra / 4K RT</h3>
+            <dl>
+              <div><dt>CPU</dt><dd>Ryzen 7 7800X3D / i7-14700K</dd></div>
+              <div><dt>GPU</dt><dd>RTX 4080 Super / RX 7900 XTX</dd></div>
+              <div><dt>RAM</dt><dd>32 GB</dd></div>
+              <div><dt>Storage</dt><dd>95 GB NVMe SSD</dd></div>
+            </dl>
+          </article>
+        </div>
+      </section>
+
+      <section class="section browser-lab" id="browser-lab" aria-labelledby="browser-lab-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Neural deck diagnostics</p>
+          <h2 id="browser-lab-title">Проверь системы костюма перед выходом в город.</h2>
+        </div>
+        <div class="lab-grid">
+          <article class="lab-console reveal">
+            <div class="console-top">
+              <span></span><span></span><span></span>
+              <strong>suit.scan()</strong>
+            </div>
+            <ul class="feature-list" aria-label="Состояние систем костюма">
+              <li><span>Phase Shift UI</span><b data-feature="viewTransition">scan</b></li>
+              <li><span>Context Analyzer</span><b data-feature="hasSelector">scan</b></li>
+              <li><span>Mission Sync</span><b data-feature="scrollTimeline">scan</b></li>
+              <li><span>Secure Comms</span><b data-feature="dialog">scan</b></li>
+              <li><span>Tactical Intel Layer</span><b data-feature="popover">scan</b></li>
+              <li><span>Offline Field Cache</span><b data-feature="serviceWorker">scan</b></li>
+              <li><span>Controller Uplink</span><b data-feature="gamepad">scan</b></li>
+            </ul>
+          </article>
+          <div class="lab-actions reveal">
+            <button class="lab-tile magnetic" type="button" popovertarget="popover-view">
+              <span>01</span>
+              <strong>Intel popout</strong>
+              <em>Тактическая подсказка поверх интерфейса</em>
+            </button>
+            <button class="lab-tile magnetic" type="button" data-theme-toggle>
+              <span>02</span>
+              <strong>Visual mode</strong>
+              <em>Переключение цветового профиля костюма</em>
+            </button>
+            <button class="lab-tile magnetic" type="button" data-open-command>
+              <span>03</span>
+              <strong>Quick deck</strong>
+              <em>Ctrl+K / мгновенный доступ к системам</em>
+            </button>
+            <button class="lab-tile magnetic" type="button" data-copy-link>
+              <span>04</span>
+              <strong>Signal copy</strong>
+              <em>Сохранить координаты рейда</em>
+            </button>
+          </div>
+        </div>
+        <div class="install-row reveal">
+          <button class="btn primary magnetic" type="button" data-install-app>Установить лаунчер</button>
+          <button class="btn ghost magnetic" type="button" data-share-site>Передать сигнал</button>
+          <button class="btn ghost magnetic" type="button" data-print-brief>Печать брифа</button>
+        </div>
+        <div class="browser-rail reveal" aria-hidden="true">
+          <span>Neural HUD</span><span>Secure comms</span><span>Intel layer</span><span>Field cache</span><span>Controller uplink</span><span>Phase shift</span>
+        </div>
+        <div class="lab-deep-grid">
+          <article class="terminal-card reveal">
+            <div class="terminal-output" data-terminal-output aria-live="polite">
+              <p>> boot neon-vector.runtime</p>
+              <p>> type <b>help</b>, <b>scan city</b>, <b>open map</b>, <b>theme</b></p>
+            </div>
+            <form class="terminal-input" data-terminal-form>
+              <span>root@veyra-9</span>
+              <input autocomplete="off" spellcheck="false" aria-label="Netrunner terminal command" placeholder="scan city" />
+              <button type="submit">Run</button>
+            </form>
+          </article>
+
+          <article class="gamepad-card reveal">
+            <p class="eyebrow">Controller uplink</p>
+            <h3>Controller uplink</h3>
+            <div class="gamepad-orb" data-gamepad-orb><span></span></div>
+            <strong data-gamepad-status>Геймпад не подключен</strong>
+            <p>Подключи контроллер и нажми любую кнопку: костюм проверит канал управления и отклик модулей.</p>
+          </article>
+          <article class="settings-card reveal">
+            <p class="eyebrow">Suit preferences</p>
+            <h3>Control room</h3>
+            <label><input type="checkbox" data-setting="motion" checked /> Motion FX</label>
+            <label><input type="checkbox" data-setting="grain" checked /> Film grain</label>
+            <label><input type="checkbox" data-setting="contrast" /> High contrast</label>
+            <label><input type="checkbox" data-setting="performance" /> Performance mode</label>
+            <small>Профиль костюма сохраняется автоматически и восстанавливается при следующем запуске.</small>
+          </article>
+        </div>
+      </section>
+
+
+      <section class="section design-system" id="design-system" aria-labelledby="design-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Field codex</p>
+          <h2 id="design-title">Цвета, интерфейсы и сигналы Veyra-9.</h2>
+        </div>
+        <div class="system-grid reveal">
+          <article><span>District colors</span><div class="swatches"><i></i><i></i><i></i><i></i></div></article>
+          <article><span>Typography</span><strong>Aa / Дд</strong><p>Anybody + Space Grotesk, aggressive AAA scale.</p></article>
+          <article><span>Actions</span><button class="btn primary" type="button">Accept</button><button class="btn ghost" type="button">Decline</button></article>
+          <article><span>Combat feedback</span><p>Сканирование, магнитные кнопки, смена режима костюма и синхронизация миссии.</p></article>
+        </div>
+      </section>
+
+      <section class="section faq" id="faq" aria-labelledby="faq-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">FAQ / Field Intel</p>
+          <h2 id="faq-title">Вопросы, которые обычно задают перед входом в Veyra-9.</h2>
+        </div>
+        <div class="faq-grid reveal">
+          <details open>
+            <summary>Когда начинается действие NEON VECTOR?</summary>
+            <p>События разворачиваются в 2089 году в Veyra-9 — вертикальном мегаполисе, где память, репутация и доступ к районам стали валютой.</p>
+          </details>
+          <details>
+            <summary>Что делает город реактивным?</summary>
+            <p>Районы меняют уровень тревоги, маршруты патрулей, цены на черном рынке и поведение фракций после каждого контракта.</p>
+          </details>
+          <details>
+            <summary>Можно ли играть разными стилями?</summary>
+            <p>Да. Ghost, Shock и Riot меняют темп прохождения: скрытность, нейронный контроль, перегрев имплантов или силовой прорыв.</p>
+          </details>
+          <details>
+            <summary>Что дают импланты?</summary>
+            <p>Импланты открывают новые маршруты, варианты диалогов, боевые реакции и способы влиять на память NPC.</p>
+          </details>
+          <details>
+            <summary>Что такое Operation: Glass Saint?</summary>
+            <p>Это центральный контракт первой главы: проникновение в Helix Spire, кража ядра ИИ и побег из города, который уже знает твое лицо.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="section final-cta" id="buy" aria-labelledby="buy-title">
+        <div class="reveal">
+          <p class="eyebrow">Pre-alpha access soon</p>
+          <h2 id="buy-title">Добавь в wishlist до того, как город добавит тебя.</h2>
+          <form class="signup" aria-label="Подписка на новости">
+            <input type="email" placeholder="you@nightmail.net" aria-label="Email" />
+            <button class="btn primary magnetic" type="submit">Получить сигнал</button>
+          </form>
+        </div>
+      </section>
+      <section class="section gallery-strip" aria-label="Кадры игрового мира">
+        <div class="gallery-card reveal"><span>01</span><strong>Rain physics</strong></div>
+        <div class="gallery-card reveal"><span>02</span><strong>Reactive crowds</strong></div>
+        <div class="gallery-card reveal"><span>03</span><strong>Vertical missions</strong></div>
+        <div class="gallery-card reveal"><span>04</span><strong>Neural choices</strong></div>
+      </section>
+    </main>
+
+    <dialog class="trailer-modal" data-trailer-modal aria-label="Трейлер NEON VECTOR">
+      <button class="modal-close" data-close-trailer aria-label="Закрыть трейлер">×</button>
+      <div class="fake-video">
+        <div class="video-bars" aria-hidden="true"><span></span><span></span><span></span></div>
+        <span class="play-icon large" aria-hidden="true"></span>
+        <p>TRAILER SIGNAL // VEYRA-9 // 00:90</p>
+      </div>
+    </dialog>
+
+    <div class="tech-popover" id="popover-view" popover>
+      <strong>Intel Popout</strong>
+      <p>Короткая тактическая сводка появляется поверх интерфейса, когда костюм получает новый сигнал из района.</p>
+    </div>
+
+    <dialog class="command-modal" data-command-modal aria-label="Quick Deck">
+      <button class="modal-close" data-close-command aria-label="Закрыть quick deck">×</button>
+      <div class="command-shell">
+        <p class="eyebrow">Quick Deck</p>
+        <h3>Быстрая навигация</h3>
+        <div class="command-list">
+          <button type="button" data-jump="#trailer">Открыть трейлер</button>
+          <button type="button" data-jump="#factions">Сравнить фракции</button>
+          <button type="button" data-jump="#timeline">Mission timeline</button>
+          <button type="button" data-jump="#neural-vision">Neural vision slider</button>
+          <button type="button" data-jump="#loadout-lab">Сборка оружия</button>
+          <button type="button" data-jump="#browser-lab">Neural deck diagnostics</button>
+          <button type="button" data-jump="#browser-lab">Netrunner terminal</button>
+          <button type="button" data-jump="#city">Карта Veyra-9</button>
+          <button type="button" data-jump="#faq">FAQ / вопросы</button>
+          <button type="button" data-jump="#buy">Wishlist CTA</button>
+        </div>
+      </div>
+    </dialog>
+
+    <div class="toast-stack" data-toast-stack aria-live="polite" aria-atomic="true"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
