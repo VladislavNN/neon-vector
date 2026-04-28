@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@85,500;100,700;112,900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=polish-10" />
+    <link rel="stylesheet" href="styles.css?v=faction-style-switch" />
   </head>
   <body>
     <div class="boot-screen" data-boot-screen aria-live="polite">
@@ -135,7 +135,7 @@
         </div>
       </section>
 
-      <section class="section factions" id="factions" aria-labelledby="factions-title">
+      <section class="section factions" id="factions" aria-labelledby="factions-title" data-active-faction="helix">
         <div class="section-heading reveal">
           <p class="eyebrow">Choose your liability</p>
           <h2 id="factions-title">Фракции не дают квесты. Они выставляют счета.</h2>
@@ -613,6 +613,7 @@
     </dialog>
 
     <div class="toast-stack" data-toast-stack aria-live="polite" aria-atomic="true"></div>
-    <script src="script.js?v=polish-10"></script>
+    <script src="script.js?v=faction-style-switch"></script>
   </body>
 </html>
+

@@ -2462,6 +2462,93 @@ body.high-contrast .map-stage img { filter: contrast(1.22) brightness(.78) satur
 }
 .faction-intel p,
 .synergy-panel p { color: var(--muted); line-height: 1.6; }
+
+/* Faction selection must feel like control of the page, not just an active card. */
+.factions {
+  --faction-accent: var(--cyan);
+  position: relative;
+  isolation: isolate;
+  transition: background .35s ease;
+}
+.factions::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 18%, color-mix(in srgb, var(--faction-accent) 22%, transparent), transparent 34rem),
+    radial-gradient(circle at 82% 42%, color-mix(in srgb, var(--faction-accent) 16%, transparent), transparent 26rem);
+  opacity: .85;
+  transition: background .35s ease, opacity .35s ease;
+}
+.factions[data-active-faction="helix"] { --faction-accent: var(--cyan); }
+.factions[data-active-faction="chrome"] { --faction-accent: var(--orange); }
+.factions[data-active-faction="null"] { --faction-accent: var(--pink); }
+.factions .section-heading .eyebrow,
+.factions .faction-tabs button.active,
+.factions .faction-intel span {
+  color: var(--faction-accent);
+}
+.factions .faction-tabs button.active {
+  border-color: color-mix(in srgb, var(--faction-accent) 68%, white 8%);
+  background: color-mix(in srgb, var(--faction-accent) 18%, rgba(2,7,10,.7));
+}
+.factions .faction-art {
+  border-color: color-mix(in srgb, var(--faction-accent) 42%, var(--line));
+  box-shadow: 0 24px 90px color-mix(in srgb, var(--faction-accent) 16%, transparent);
+  transition: border-color .35s ease, box-shadow .35s ease;
+}
+.factions .faction-art img {
+  transition: filter .4s ease, transform .55s ease;
+}
+.factions[data-active-faction="helix"] .faction-art img {
+  filter: saturate(1.18) contrast(1.08) hue-rotate(0deg);
+}
+.factions[data-active-faction="chrome"] .faction-art img {
+  filter: saturate(1.35) contrast(1.08) hue-rotate(-24deg);
+  transform: scale(1.018);
+}
+.factions[data-active-faction="null"] .faction-art img {
+  filter: saturate(1.28) contrast(1.16) hue-rotate(42deg);
+  transform: scale(1.012);
+}
+.faction-control .faction-card {
+  opacity: .62;
+  filter: grayscale(.22);
+  transition: opacity .25s ease, filter .25s ease, transform .25s ease, border-color .25s ease, background .25s ease;
+}
+.faction-control .faction-card.active {
+  opacity: 1;
+  filter: none;
+  border-color: color-mix(in srgb, var(--faction-accent) 74%, white 10%);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--faction-accent) 18%, rgba(14,28,38,.82)), rgba(6,10,14,.78));
+  box-shadow: 0 24px 80px color-mix(in srgb, var(--faction-accent) 18%, transparent);
+}
+.faction-control .faction-card.active .card-index,
+.faction-control .faction-card.active .faction-sigil {
+  color: var(--faction-accent);
+  border-color: color-mix(in srgb, var(--faction-accent) 58%, transparent);
+}
+.faction-intel {
+  border-color: color-mix(in srgb, var(--faction-accent) 46%, var(--line));
+  background:
+    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--faction-accent) 18%, transparent), transparent 22rem),
+    linear-gradient(135deg, rgba(12,27,35,.8), rgba(3,8,12,.9));
+  box-shadow: 0 22px 80px color-mix(in srgb, var(--faction-accent) 14%, transparent);
+  transition: border-color .35s ease, background .35s ease, box-shadow .35s ease;
+}
+.faction-intel strong {
+  text-shadow: 0 0 34px color-mix(in srgb, var(--faction-accent) 22%, transparent);
+}
+.map-shell[data-faction="helix"] { --active-district: var(--cyan); }
+.map-shell[data-faction="chrome"] { --active-district: var(--orange); }
+.map-shell[data-faction="null"] { --active-district: var(--pink); }
+.map-shell[data-faction] .map-pin.active {
+  background: color-mix(in srgb, var(--active-district, var(--green)) 76%, white 8%);
+  box-shadow: 0 0 40px color-mix(in srgb, var(--active-district, var(--green)) 45%, transparent);
+}
 .weapon-bars {
   display: grid;
   gap: 10px;

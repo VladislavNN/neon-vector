@@ -696,6 +696,7 @@ if (routeState?.weapon) selectWeaponProfile(routeState.weapon);
 
 // Expansion pack: factions influence map, character abilities, editions, ambient city signal.
 const factionDistrict = { helix: 'Helix Spire', chrome: 'Rust Docks', null: 'Null Market' };
+const factionsSection = document.querySelector('.factions');
 const factionIntel = {
   helix: ['Helix Directorate controls access to clean air, elevators and elite patrol routes.', 'Корпоративная поддержка снижает chaos, но повышает цену любой ошибки.'],
   chrome: ['Chrome Saints open black clinics, weapon mods and smuggler roads.', 'Улицы становятся быстрее и опаснее: больше апгрейдов, больше засад.'],
@@ -707,6 +708,7 @@ document.querySelectorAll('[data-faction]').forEach((card) => {
     const faction = card.dataset.faction;
     const mapShell = document.querySelector('[data-map-shell]');
     const intel = document.querySelector('[data-faction-intel]');
+    if (factionsSection) factionsSection.dataset.activeFaction = faction;
     if (mapShell) mapShell.dataset.faction = faction;
     if (intel && factionIntel[faction]) {
       intel.querySelector('strong').textContent = factionIntel[faction][0];
