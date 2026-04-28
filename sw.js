@@ -1,4 +1,4 @@
-const CACHE_NAME = 'neon-vector-showcase-v16';
+const CACHE_NAME = 'neon-vector-showcase-v17';
 const ASSETS = [
   './styles.css',
   './script.js',
@@ -13,7 +13,12 @@ const ASSETS = [
   './assets/character-mira.png',
   './assets/character-kira.png',
   './assets/combat-scene.png',
-  './assets/factions-triptych.png'
+  './assets/factions-triptych.png',
+  './assets/audio/city-ambient.ogg',
+  './assets/audio/ui-click.ogg',
+  './assets/audio/ui-confirm.ogg',
+  './assets/audio/ui-hover.ogg',
+  './assets/audio/ui-toggle.ogg'
 ];
 
 self.addEventListener('install', (event) => {

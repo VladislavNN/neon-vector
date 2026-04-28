@@ -758,136 +758,118 @@ document.querySelectorAll('[data-edition]').forEach((button) => {
   });
 });
 
-let cityAudio;
+const audioSources = {
+  ambient: 'assets/audio/city-ambient.ogg',
+  clicks: {
+    soft: 'assets/audio/ui-hover.ogg',
+    hard: 'assets/audio/ui-toggle.ogg',
+    confirm: 'assets/audio/ui-confirm.ogg',
+    click: 'assets/audio/ui-click.ogg'
+  }
+};
+
+let cityAmbient;
+let cityAudioFade;
 let activeAudioPreset = 'rain';
 const soundToggle = document.querySelector('[data-sound-toggle]');
 const audioCard = document.querySelector('[data-audio-card]');
 const audioStatus = document.querySelector('[data-audio-status]');
 const audioPresetButtons = document.querySelectorAll('[data-audio-preset]');
 const uiClicksToggle = document.querySelector('[data-ui-clicks]');
+const clickPool = new Map();
 let uiClicksEnabled = uiClicksToggle?.checked ?? true;
 
-function createNoiseBuffer(context, seconds = 2) {
-  const length = context.sampleRate * seconds;
-  const buffer = context.createBuffer(1, length, context.sampleRate);
-  const data = buffer.getChannelData(0);
-  for (let i = 0; i < length; i += 1) data[i] = Math.random() * 2 - 1;
-  return buffer;
+const audioPresetCopy = {
+  rain: { label: 'Rain channel online', rate: 0.94, volume: 0.36 },
+  drone: { label: 'Drone patrol channel online', rate: 0.82, volume: 0.42 },
+  combat: { label: 'Combat pulse channel online', rate: 1.08, volume: 0.46 }
+};
+
+function getCityAmbient() {
+  if (cityAmbient) return cityAmbient;
+  cityAmbient = new Audio(audioSources.ambient);
+  cityAmbient.loop = true;
+  cityAmbient.preload = 'auto';
+  cityAmbient.volume = 0;
+  return cityAmbient;
 }
 
-function buildCityAudio() {
-  const context = new (window.AudioContext || window.webkitAudioContext)();
-  const master = context.createGain();
-  master.gain.value = 0.0001;
-  master.connect(context.destination);
-  const sfxGain = context.createGain();
-  sfxGain.gain.value = 0.18;
-  sfxGain.connect(context.destination);
-
-  const rain = context.createBufferSource();
-  rain.buffer = createNoiseBuffer(context, 3);
-  rain.loop = true;
-  const rainFilter = context.createBiquadFilter();
-  rainFilter.type = 'bandpass';
-  rainFilter.frequency.value = 950;
-  rainFilter.Q.value = 0.7;
-  const rainGain = context.createGain();
-  rainGain.gain.value = 0.026;
-  rain.connect(rainFilter).connect(rainGain).connect(master);
-
-  const drone = context.createOscillator();
-  drone.type = 'sawtooth';
-  drone.frequency.value = 46;
-  const droneFilter = context.createBiquadFilter();
-  droneFilter.type = 'lowpass';
-  droneFilter.frequency.value = 190;
-  const droneGain = context.createGain();
-  droneGain.gain.value = 0.012;
-  drone.connect(droneFilter).connect(droneGain).connect(master);
-
-  const pulse = context.createOscillator();
-  pulse.type = 'square';
-  pulse.frequency.value = 1.8;
-  const pulseGain = context.createGain();
-  pulseGain.gain.value = 0.004;
-  pulse.connect(pulseGain).connect(master);
-
-  rain.start();
-  drone.start();
-  pulse.start();
-
-  return { context, master, sfxGain, rainGain, droneGain, pulseGain, drone, pulse };
+function fadeAudio(audio, targetVolume, duration = 260, after) {
+  if (cityAudioFade) window.clearInterval(cityAudioFade);
+  const startVolume = audio.volume;
+  const startedAt = performance.now();
+  cityAudioFade = window.setInterval(() => {
+    const progress = Math.min((performance.now() - startedAt) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    audio.volume = startVolume + (targetVolume - startVolume) * eased;
+    if (progress >= 1) {
+      window.clearInterval(cityAudioFade);
+      cityAudioFade = undefined;
+      audio.volume = targetVolume;
+      after?.();
+    }
+  }, 16);
 }
 
-async function ensureCityAudio() {
-  if (!cityAudio) cityAudio = buildCityAudio();
-  if (cityAudio.context.state === 'suspended') await cityAudio.context.resume();
-  return cityAudio;
+function getClickAudio(kind) {
+  const src = audioSources.clicks[kind] || audioSources.clicks.soft;
+  const pool = clickPool.get(src) || [];
+  let audio = pool.find((item) => item.paused || item.ended);
+  if (!audio) {
+    audio = new Audio(src);
+    audio.preload = 'auto';
+    pool.push(audio);
+    clickPool.set(src, pool);
+  }
+  return audio;
 }
 
-async function playUIClick(kind = 'soft') {
+function playUIClick(kind = 'soft') {
   if (!uiClicksEnabled) return;
-  const audio = await ensureCityAudio();
-  const now = audio.context.currentTime;
-  const click = audio.context.createOscillator();
-  const clickGain = audio.context.createGain();
-  const filter = audio.context.createBiquadFilter();
-  const settings = {
-    soft: { type: 'triangle', start: 720, end: 1280, gain: 0.045, time: 0.055 },
-    hard: { type: 'square', start: 220, end: 90, gain: 0.038, time: 0.075 },
-    confirm: { type: 'sine', start: 880, end: 1760, gain: 0.052, time: 0.09 }
-  }[kind] || { type: 'triangle', start: 720, end: 1280, gain: 0.045, time: 0.055 };
-  click.type = settings.type;
-  filter.type = 'bandpass';
-  filter.frequency.value = kind === 'hard' ? 420 : 1600;
-  filter.Q.value = kind === 'hard' ? 1.8 : 4.2;
-  click.frequency.setValueAtTime(settings.start, now);
-  click.frequency.exponentialRampToValueAtTime(settings.end, now + settings.time);
-  clickGain.gain.setValueAtTime(0.0001, now);
-  clickGain.gain.exponentialRampToValueAtTime(settings.gain, now + 0.008);
-  clickGain.gain.exponentialRampToValueAtTime(0.0001, now + settings.time);
-  click.connect(filter).connect(clickGain).connect(audio.sfxGain);
-  click.start(now);
-  click.stop(now + settings.time + 0.02);
+  const audio = getClickAudio(kind);
+  audio.pause();
+  audio.currentTime = 0;
+  audio.volume = kind === 'confirm' ? 0.42 : kind === 'hard' ? 0.34 : 0.22;
+  audio.play().catch(() => {});
+}
+
+async function playCityAmbient() {
+  const ambient = getCityAmbient();
+  const preset = audioPresetCopy[activeAudioPreset] || audioPresetCopy.rain;
+  ambient.playbackRate = preset.rate;
+  await ambient.play();
+  fadeAudio(ambient, preset.volume);
 }
 
 function applyAudioPreset(preset) {
   activeAudioPreset = preset;
   audioPresetButtons.forEach((button) => button.classList.toggle('active', button.dataset.audioPreset === preset));
-  if (!cityAudio) return;
-  const values = {
-    rain: { master: 0.12, rain: 0.03, drone: 0.008, pulse: 0.002, droneHz: 44, pulseHz: 1.2, label: 'Rain channel online' },
-    drone: { master: 0.13, rain: 0.014, drone: 0.018, pulse: 0.003, droneHz: 58, pulseHz: 1.7, label: 'Drone patrol channel online' },
-    combat: { master: 0.15, rain: 0.018, drone: 0.014, pulse: 0.008, droneHz: 72, pulseHz: 3.4, label: 'Combat pulse channel online' }
-  }[preset];
-  const now = cityAudio.context.currentTime;
-  cityAudio.master.gain.cancelScheduledValues(now);
-  cityAudio.rainGain.gain.cancelScheduledValues(now);
-  cityAudio.droneGain.gain.cancelScheduledValues(now);
-  cityAudio.pulseGain.gain.cancelScheduledValues(now);
-  cityAudio.master.gain.linearRampToValueAtTime(values.master, now + 0.18);
-  cityAudio.rainGain.gain.linearRampToValueAtTime(values.rain, now + 0.18);
-  cityAudio.droneGain.gain.linearRampToValueAtTime(values.drone, now + 0.18);
-  cityAudio.pulseGain.gain.linearRampToValueAtTime(values.pulse, now + 0.18);
-  cityAudio.drone.frequency.linearRampToValueAtTime(values.droneHz, now + 0.22);
-  cityAudio.pulse.frequency.linearRampToValueAtTime(values.pulseHz, now + 0.22);
-  if (audioStatus) audioStatus.textContent = values.label;
+  const settings = audioPresetCopy[preset] || audioPresetCopy.rain;
+  if (audioStatus && audioCard?.classList.contains('active')) audioStatus.textContent = settings.label;
+  if (cityAmbient && audioCard?.classList.contains('active')) {
+    cityAmbient.playbackRate = settings.rate;
+    fadeAudio(cityAmbient, settings.volume, 180);
+  }
 }
 
 async function toggleCityAudio() {
-  await ensureCityAudio();
   const isActive = !audioCard?.classList.contains('active');
+  const ambient = getCityAmbient();
   if (isActive) {
-    applyAudioPreset(activeAudioPreset);
     soundToggle?.classList.add('active');
     audioCard?.classList.add('active');
-    unlockAchievement('City signal', 'Ambient soundfield opened');
+    applyAudioPreset(activeAudioPreset);
+    try {
+      await playCityAmbient();
+      unlockAchievement('City signal', 'Ambient soundfield opened');
+    } catch {
+      if (audioStatus) audioStatus.textContent = 'Нажми еще раз, чтобы открыть аудиоканал';
+    }
   } else {
-    const now = cityAudio.context.currentTime;
-    cityAudio.master.gain.linearRampToValueAtTime(0.0001, now + 0.16);
     soundToggle?.classList.remove('active');
     audioCard?.classList.remove('active');
     if (audioStatus) audioStatus.textContent = 'Сигнал заглушен';
+    fadeAudio(ambient, 0, 220, () => ambient.pause());
   }
 }
 
@@ -898,14 +880,22 @@ audioCard?.addEventListener('click', (event) => {
 });
 audioPresetButtons.forEach((button) => {
   button.addEventListener('click', async () => {
-    if (!cityAudio || !audioCard?.classList.contains('active')) await toggleCityAudio();
     applyAudioPreset(button.dataset.audioPreset);
-    unlockAchievement('Audio layer', `${button.textContent.trim()} channel selected`);
+    if (!audioCard?.classList.contains('active')) await toggleCityAudio();
+    unlockAchievement('Audio layer', button.textContent.trim() + ' channel selected');
   });
 });
 uiClicksToggle?.addEventListener('change', () => {
   uiClicksEnabled = uiClicksToggle.checked;
   if (uiClicksEnabled) playUIClick('confirm');
+});
+document.addEventListener('visibilitychange', () => {
+  if (!cityAmbient) return;
+  if (document.hidden && !cityAmbient.paused) {
+    cityAmbient.pause();
+    return;
+  }
+  if (!document.hidden && audioCard?.classList.contains('active')) playCityAmbient().catch(() => {});
 });
 document.addEventListener('pointerdown', (event) => {
   const target = event.target.closest('button, a, summary, input, .mod-chip, .drop-slot, .map-pin, .faction-card');
