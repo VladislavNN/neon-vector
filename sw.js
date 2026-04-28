@@ -1,4 +1,4 @@
-const CACHE_NAME = 'neon-vector-showcase-v19';
+const CACHE_NAME = 'neon-vector-showcase-v20';
 const ASSETS = [
   './styles.css',
   './script.js',
@@ -14,7 +14,7 @@ const ASSETS = [
   './assets/character-kira.png',
   './assets/combat-scene.png',
   './assets/factions-triptych.png',
-  './assets/audio/city-ambient.ogg?v=empty-city',
+  './assets/audio/background-track.mp3?v=edgerunners',
   './assets/audio/ui-click.ogg',
   './assets/audio/ui-confirm.ogg',
   './assets/audio/ui-hover.ogg',

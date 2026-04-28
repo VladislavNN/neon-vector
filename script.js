@@ -759,7 +759,7 @@ document.querySelectorAll('[data-edition]').forEach((button) => {
 });
 
 const audioSources = {
-  ambient: 'assets/audio/city-ambient.ogg?v=empty-city',
+  ambient: 'assets/audio/background-track.mp3?v=edgerunners',
   clicks: {
     soft: 'assets/audio/ui-hover.ogg',
     hard: 'assets/audio/ui-toggle.ogg',
@@ -780,9 +780,9 @@ const clickPool = new Map();
 let uiClicksEnabled = uiClicksToggle?.checked ?? true;
 
 const audioPresetCopy = {
-  rain: { label: 'Rain channel online', rate: 0.96, volume: 0.26 },
-  drone: { label: 'Drone patrol channel online', rate: 0.88, volume: 0.31 },
-  combat: { label: 'Combat pulse channel online', rate: 1.04, volume: 0.34 }
+  rain: { label: 'Track online', rate: 1, volume: 0.12 },
+  drone: { label: 'Night drive mix online', rate: 0.98, volume: 0.16 },
+  combat: { label: 'Final run mix online', rate: 1.02, volume: 0.2 }
 };
 
 function getCityAmbient() {
@@ -897,6 +897,20 @@ document.addEventListener('visibilitychange', () => {
   }
   if (!document.hidden && audioCard?.classList.contains('active')) playCityAmbient().catch(() => {});
 });
+function armAutoplayFallback() {
+  if (audioCard?.classList.contains('active')) return;
+  soundToggle?.classList.add('active');
+  audioCard?.classList.add('active');
+  applyAudioPreset(activeAudioPreset);
+  playCityAmbient().catch(() => {});
+}
+
+window.addEventListener('load', () => {
+  window.setTimeout(() => toggleCityAudio(), 450);
+});
+document.addEventListener('pointerdown', armAutoplayFallback, { once: true, passive: true });
+document.addEventListener('keydown', armAutoplayFallback, { once: true });
+
 document.addEventListener('pointerdown', (event) => {
   const target = event.target.closest('button, a, summary, input, .mod-chip, .drop-slot, .map-pin, .faction-card');
   if (!target) return;
