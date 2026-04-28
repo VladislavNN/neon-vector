@@ -43,6 +43,7 @@
         <a href="#timeline">Mission</a>
         <a href="#browser-lab">Deck</a>
         <a href="#design-system">Codex</a>
+        <a href="#editions">Editions</a>
         <a href="#faq">FAQ</a>
         <a href="#specs">PC</a>
       </nav>
@@ -56,10 +57,12 @@
       <a href="#timeline">Run</a>
       <a href="#browser-lab">Deck</a>
       <a href="#design-system">Codex</a>
+      <a href="#editions">Buy</a>
       <a href="#faq">FAQ</a>
     </nav>
 
     <button class="command-fab magnetic" type="button" data-open-command aria-label="Открыть quick deck">⌘K</button>
+    <button class="sound-toggle magnetic" type="button" data-sound-toggle aria-label="Переключить городской сигнал">SIGNAL</button>
     <aside class="perf-hud" data-perf-hud aria-label="Монитор костюма">
       <span>FPS <b data-fps>--</b></span>
       <span>SW <b data-sw-status>scan</b></span>
@@ -112,6 +115,12 @@
           <span class="play-icon" aria-hidden="true"></span>
           <span class="trailer-meta">4K capture / in-engine / no safe zones</span>
         </button>
+        <div class="trailer-storyboard reveal" aria-label="Кадры трейлера">
+          <article><img src="assets/combat-scene.png" alt="Каэль и Мира в перестрелке на неоновой улице" width="1792" height="1024" loading="lazy" decoding="async" /><span>00:12 breach</span></article>
+          <article><img src="assets/street-district.png" alt="Дождливая улица Veyra-9" width="1672" height="941" loading="lazy" decoding="async" /><span>00:31 pursuit</span></article>
+          <article><img src="assets/city-map.png" alt="Тактическая карта Veyra-9" width="1694" height="928" loading="lazy" decoding="async" /><span>00:54 lockdown</span></article>
+          <article><img src="assets/hero-city.png" alt="Панорама мегаполиса Veyra-9" width="1915" height="821" loading="lazy" decoding="async" /><span>01:18 escape</span></article>
+        </div>
       </section>
 
       <section class="section factions" id="factions" aria-labelledby="factions-title">
@@ -124,20 +133,21 @@
           <button type="button">Contracts</button>
           <button type="button">Heat</button>
         </div>
-        <div class="card-grid three">
-          <article class="faction-card reveal" style="--accent: var(--cyan)">
+        <div class="faction-art reveal"><img src="assets/factions-triptych.png" alt="Faction triptych: Helix Directorate, Chrome Saints and Null Choir" width="1792" height="1024" loading="lazy" decoding="async" /></div>
+        <div class="card-grid three faction-control">
+          <article class="faction-card reveal active" data-faction="helix" style="--accent: var(--cyan)">
             <span class="card-index">01</span>
             <span class="faction-sigil">HX</span>
             <h3>Helix Directorate</h3>
             <p>Корпоративные архитекторы города. Их солдаты не промахиваются, потому что покупают исход боя заранее.</p>
           </article>
-          <article class="faction-card reveal" style="--accent: var(--orange)">
+          <article class="faction-card reveal" data-faction="chrome" style="--accent: var(--orange)">
             <span class="card-index">02</span>
             <span class="faction-sigil">CS</span>
             <h3>Chrome Saints</h3>
             <p>Культ уличных хирургов и нелегальных апгрейдов. Верят, что душа - это устаревшая прошивка.</p>
           </article>
-          <article class="faction-card reveal" style="--accent: var(--pink)">
+          <article class="faction-card reveal" data-faction="null" style="--accent: var(--pink)">
             <span class="card-index">03</span>
             <span class="faction-sigil">NC</span>
             <h3>Null Choir</h3>
@@ -206,7 +216,7 @@
               <p class="eyebrow">Lead runner / close combat</p>
               <h3>KAEL RAIN</h3>
               <p>Бывший курьер Helix, который знает внутренние лифты шпиля, подпольные парковки и маршруты эвакуации лучше городских карт.</p>
-              <span>Reflex spine / rail pistol / street contracts</span>
+              <span>Reflex spine / rail pistol / street contracts</span><div class="ability-tabs"><button type="button" class="active" data-ability="dash">Dash break</button><button type="button" data-ability="parry">Bullet parry</button><button type="button" data-ability="deal">Street deal</button></div><p class="ability-readout" data-ability-readout="kael">Dash break: быстрый рывок через линию огня с окном контратаки.</p>
             </div>
           </article>
           <article class="hero-character reveal tilt-card">
@@ -215,7 +225,7 @@
               <p class="eyebrow">Netrunner / signal architect</p>
               <h3>MIRA VALE</h3>
               <p>Тихий архитектор взлома: открывает закрытые районы, подменяет профили охраны и превращает камеры города в союзников.</p>
-              <span>Neural deck / spoof identity / district control</span>
+              <span>Neural deck / spoof identity / district control</span><div class="ability-tabs"><button type="button" class="active" data-ability="spoof">ID spoof</button><button type="button" data-ability="blind">Camera blind</button><button type="button" data-ability="puppet">Drone puppet</button></div><p class="ability-readout" data-ability-readout="mira">ID spoof: временно меняет профиль доступа в закрытых районах.</p>
             </div>
           </article>
         </div>
@@ -290,6 +300,7 @@
             <button type="button" data-district="Rust Docks">Rust Docks <small>Smuggler coast</small></button>
             <button type="button" data-district="Null Market">Null Market <small>Identity black market</small></button>
           </div>
+          <div class="heat-legend" aria-label="Уровень угрозы районов"><i aria-hidden="true"></i><span>Heat index 18-92%</span></div>
           <div class="district-panel" data-district-panel>
             <span>District feed</span>
             <strong>Helix Spire</strong>
@@ -470,9 +481,22 @@
         </div>
       </section>
 
+
+      <section class="section editions" id="editions" aria-labelledby="editions-title">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Choose edition</p>
+          <h2 id="editions-title">Выбери способ войти в Veyra-9.</h2>
+        </div>
+        <div class="edition-grid reveal">
+          <article><span>Standard</span><h3>Base contract</h3><p>Игра, цифровой артбук и стартовый набор имплантов.</p><button type="button" class="btn ghost" data-edition="Standard">В wishlist</button></article>
+          <article class="featured"><span>Deluxe</span><h3>Night runner</h3><p>Саундтрек, скины Kael/Mira и эксклюзивный Chrome Saints контракт.</p><button type="button" class="btn primary" data-edition="Deluxe">Выбрать</button></article>
+          <article><span>Collector</span><h3>Glass saint</h3><p>Все бонусы Deluxe, цифровая карта Veyra-9 и набор оружейных модулей.</p><button type="button" class="btn ghost" data-edition="Collector">В wishlist</button></article>
+        </div>
+      </section>
+
       <section class="section final-cta" id="buy" aria-labelledby="buy-title">
         <div class="reveal">
-          <p class="eyebrow">Pre-alpha access soon</p>
+          <p class="eyebrow">Wishlist signal live</p>
           <h2 id="buy-title">Добавь в wishlist до того, как город добавит тебя.</h2>
           <form class="signup" aria-label="Подписка на новости">
             <input type="email" placeholder="you@nightmail.net" aria-label="Email" />

@@ -2167,3 +2167,124 @@ body.high-contrast .map-stage img { filter: contrast(1.22) brightness(.78) satur
   .release-strip span { flex: 1 1 auto; text-align: center; }
   .site-footer { padding-bottom: 116px; }
 }
+
+/* Expansion pack 1-10: trailer storyboard, faction map control, abilities, editions, signal audio UI. */
+.sound-toggle {
+  position: fixed;
+  right: 94px;
+  bottom: 22px;
+  z-index: 70;
+  min-width: 92px;
+  height: 44px;
+  border: 1px solid rgba(66,248,255,.34);
+  border-radius: 999px;
+  color: var(--cyan);
+  background: rgba(3,8,12,.74);
+  backdrop-filter: blur(16px);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .12em;
+  cursor: pointer;
+}
+.sound-toggle.active { color: #061014; background: linear-gradient(135deg,var(--cyan),var(--green)); }
+.trailer-storyboard {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+}
+.trailer-storyboard article {
+  position: relative;
+  min-height: 180px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #020609;
+}
+.trailer-storyboard img { width: 100%; height: 100%; object-fit: cover; filter: saturate(1.08) contrast(1.05); }
+.trailer-storyboard span {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  color: var(--green);
+  background: rgba(2,7,10,.72);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.faction-art {
+  margin-bottom: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 34px;
+  box-shadow: var(--shadow);
+}
+.faction-art img { width: 100%; height: 360px; object-fit: cover; }
+.faction-control .faction-card { cursor: pointer; }
+.faction-control .faction-card.active { border-color: var(--green); transform: translateY(-8px); }
+.ability-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.ability-tabs button {
+  border: 1px solid rgba(126,245,255,.2);
+  border-radius: 999px;
+  padding: 8px 10px;
+  color: var(--text);
+  background: rgba(2,7,10,.62);
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+}
+.ability-tabs button.active { color: #061014; background: var(--green); border-color: transparent; }
+.ability-readout { margin-top: 10px !important; color: var(--green) !important; font-size: 13px !important; }
+.heat-legend {
+  position: absolute;
+  left: 36px;
+  bottom: 36px;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(126,245,255,.2);
+  border-radius: 999px;
+  background: rgba(2,7,10,.72);
+  backdrop-filter: blur(12px);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+.heat-legend i { width: 120px; height: 8px; border-radius: 999px; background: linear-gradient(90deg,var(--green),var(--orange),var(--pink)); }
+.map-shell[data-faction="helix"] { --map-x: 51%; --map-y: 43%; }
+.map-shell[data-faction="chrome"] { --map-x: 25%; --map-y: 62%; }
+.map-shell[data-faction="null"] { --map-x: 75%; --map-y: 63%; }
+.editions { background: radial-gradient(circle at 50% 20%, rgba(255,138,53,.1), transparent 30rem); }
+.edition-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.edition-grid article {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--line);
+  border-radius: 30px;
+  padding: 26px;
+  background: linear-gradient(180deg, rgba(12,27,35,.74), rgba(4,9,12,.82));
+  box-shadow: var(--shadow);
+}
+.edition-grid article.featured { border-color: rgba(175,255,47,.52); background: linear-gradient(180deg, rgba(175,255,47,.12), rgba(4,9,12,.84)); }
+.edition-grid span { color: var(--green); text-transform: uppercase; letter-spacing: .14em; font-size: 12px; font-weight: 950; }
+.edition-grid p { color: var(--muted); line-height: 1.6; }
+@media (max-width: 920px) {
+  .trailer-storyboard, .edition-grid { grid-template-columns: 1fr 1fr; }
+  .sound-toggle { right: 84px; bottom: 88px; }
+  .heat-legend { left: 24px; bottom: 132px; }
+}
+@media (max-width: 620px) {
+  .trailer-storyboard, .edition-grid { grid-template-columns: 1fr; }
+  .faction-art img { height: 240px; }
+  .sound-toggle { display: none; }
+  .heat-legend { position: relative; left: auto; bottom: auto; margin: 10px; justify-content: center; }
+}

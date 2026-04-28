@@ -643,3 +643,65 @@ document.querySelectorAll('[data-weapon]').forEach((button) => {
   });
 });
 if (routeState?.weapon) selectWeaponProfile(routeState.weapon);
+
+// Expansion pack: factions influence map, character abilities, editions, ambient city signal.
+const factionDistrict = { helix: 'Helix Spire', chrome: 'Rust Docks', null: 'Null Market' };
+document.querySelectorAll('[data-faction]').forEach((card) => {
+  card.addEventListener('click', () => {
+    document.querySelectorAll('[data-faction]').forEach((item) => item.classList.toggle('active', item === card));
+    const faction = card.dataset.faction;
+    const mapShell = document.querySelector('[data-map-shell]');
+    if (mapShell) mapShell.dataset.faction = faction;
+    selectDistrict(factionDistrict[faction]);
+    unlockAchievement('Faction influence', card.querySelector('h3')?.textContent || 'Faction selected');
+  });
+});
+
+const abilityCopy = {
+  dash: 'Dash break: рывок через линию огня с окном контратаки.',
+  parry: 'Bullet parry: короткое окно отражения для элитных стрелков Helix.',
+  deal: 'Street deal: снижает цену входа в районы Chrome Saints.',
+  spoof: 'ID spoof: временно меняет профиль доступа в закрытых районах.',
+  blind: 'Camera blind: гасит сетку наблюдения на один маршрут.',
+  puppet: 'Drone puppet: перехватывает дрон и отмечает цели через стены.'
+};
+document.querySelectorAll('[data-ability]').forEach((button) => {
+  button.addEventListener('click', () => {
+    const panel = button.closest('.hero-character');
+    panel?.querySelectorAll('[data-ability]').forEach((item) => item.classList.toggle('active', item === button));
+    const readout = panel?.querySelector('.ability-readout');
+    if (readout) readout.textContent = abilityCopy[button.dataset.ability];
+  });
+});
+
+document.querySelectorAll('[data-edition]').forEach((button) => {
+  button.addEventListener('click', () => {
+    unlockAchievement('Wishlist updated', `${button.dataset.edition} edition added`);
+    button.textContent = 'Добавлено';
+  });
+});
+
+let audioContext;
+let oscillator;
+let gainNode;
+document.querySelector('[data-sound-toggle]')?.addEventListener('click', async (event) => {
+  const button = event.currentTarget;
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    oscillator = audioContext.createOscillator();
+    gainNode = audioContext.createGain();
+    oscillator.type = 'sine';
+    oscillator.frequency.value = 72;
+    gainNode.gain.value = 0.018;
+    oscillator.connect(gainNode).connect(audioContext.destination);
+    oscillator.start();
+    button.classList.add('active');
+    unlockAchievement('City signal', 'Ambient channel opened');
+  } else if (audioContext.state === 'running') {
+    await audioContext.suspend();
+    button.classList.remove('active');
+  } else {
+    await audioContext.resume();
+    button.classList.add('active');
+  }
+});
